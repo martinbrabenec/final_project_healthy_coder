@@ -20,16 +20,22 @@ class ActivityController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'activity_type' => 'required',
-            'body_zone' => 'required',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'activity_type' => 'required|in:sport,coder',
+            'body_zone' => 'required|in:Posture & Sitting,Neck & Upper Body,Hand & Wrist,Head & Eyes,Lower Body,General',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        Activity::create($request->all());
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('activities', 'public');
+            $validated['image'] = $path;
+        }
 
-        return redirect()->route('activities.index')->with('success', 'Activity created successfully.');
+        $activity = Activity::create($validated);
+
+        return redirect()->route('activities.show', $activity)->with('success', 'Activity created successfully');
     }
 
     public function show(Activity $activity)
@@ -44,22 +50,28 @@ class ActivityController extends Controller
 
     public function update(Request $request, Activity $activity)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'activity_type' => 'required',
-            'body_zone' => 'required',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'activity_type' => 'required|in:sport,coder',
+            'body_zone' => 'required|in:Posture & Sitting,Neck & Upper Body,Hand & Wrist,Head & Eyes,Lower Body,General',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        $activity->update($request->all());
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('activities', 'public');
+            $validated['image'] = $path;
+        }
 
-        return redirect()->route('activities.index')->with('success', 'Activity updated successfully.');
+        $activity->update($validated);
+
+        return redirect()->route('activities.show', $activity)->with('success', 'Activity updated successfully');
     }
 
     public function destroy(Activity $activity)
     {
         $activity->delete();
 
-        return redirect()->route('activities.index')->with('success', 'Activity deleted successfully.');
+        return redirect()->route('activities.index')->with('success', 'Activity deleted successfully');
     }
 }

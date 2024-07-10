@@ -20,13 +20,13 @@ class IngredientController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:ingredients,name',
         ]);
 
-        Ingredient::create($request->all());
+        $ingredient = Ingredient::create($validated);
 
-        return redirect()->route('ingredients.index')->with('success', 'Ingredient created successfully.');
+        return redirect()->route('ingredients.index')->with('success', 'Ingredient created successfully');
     }
 
     public function show(Ingredient $ingredient)
@@ -41,19 +41,19 @@ class IngredientController extends Controller
 
     public function update(Request $request, Ingredient $ingredient)
     {
-        $request->validate([
-            'name' => 'required',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:ingredients,name,' . $ingredient->id,
         ]);
 
-        $ingredient->update($request->all());
+        $ingredient->update($validated);
 
-        return redirect()->route('ingredients.index')->with('success', 'Ingredient updated successfully.');
+        return redirect()->route('ingredients.index')->with('success', 'Ingredient updated successfully');
     }
 
     public function destroy(Ingredient $ingredient)
     {
         $ingredient->delete();
 
-        return redirect()->route('ingredients.index')->with('success', 'Ingredient deleted successfully.');
+        return redirect()->route('ingredients.index')->with('success', 'Ingredient deleted successfully');
     }
 }

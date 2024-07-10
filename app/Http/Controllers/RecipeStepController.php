@@ -2,62 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
 use App\Models\RecipeStep;
 use Illuminate\Http\Request;
 
 class RecipeStepController extends Controller
 {
-    public function index()
+    public function index(Recipe $recipe)
     {
-        $recipeSteps = RecipeStep::all();
-        return view('recipe_steps.index', compact('recipeSteps'));
+        $steps = $recipe->steps;
+        return view('recipe_steps.index', compact('recipe', 'steps'));
     }
 
-    public function create()
+    public function create(Recipe $recipe)
     {
-        return view('recipe_steps.create');
+        return view('recipe_steps.create', compact('recipe'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Recipe $recipe)
     {
-        $request->validate([
-            'recipe_id' => 'required',
-            'step_number' => 'required',
-            'description' => 'required',
+        $validated = $request->validate([
+            'step_number' => 'required|integer|min:1',
+            'description' => 'required|string',
         ]);
 
-        RecipeStep::create($request->all());
+        $step = $recipe->steps()->create($validated);
 
-        return redirect()->route('recipe_steps.index')->with('success', 'Recipe Step created successfully.');
+        return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe step added successfully');
     }
 
-    public function show(RecipeStep $recipeStep)
+    public function edit(Recipe $recipe, RecipeStep $step)
     {
-        return view('recipe_steps.show', compact('recipeStep'));
+        return view('recipe_steps.edit', compact('recipe', 'step'));
     }
 
-    public function edit(RecipeStep $recipeStep)
+    public function update(Request $request, Recipe $recipe, RecipeStep $step)
     {
-        return view('recipe_steps.edit', compact('recipeStep'));
-    }
-
-    public function update(Request $request, RecipeStep $recipeStep)
-    {
-        $request->validate([
-            'recipe_id' => 'required',
-            'step_number' => 'required',
-            'description' => 'required',
+        $validated = $request->validate([
+            'step_number' => 'required|integer|min:1',
+            'description' => 'required|string',
         ]);
 
-        $recipeStep->update($request->all());
+        $step->update($validated);
 
-        return redirect()->route('recipe_steps.index')->with('success', 'Recipe Step updated successfully.');
+        return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe step updated successfully');
     }
 
-    public function destroy(RecipeStep $recipeStep)
+    public function destroy(Recipe $recipe, RecipeStep $step)
     {
-        $recipeStep->delete();
+        $step->delete();
 
-        return redirect()->route('recipe_steps.index')->with('success', 'Recipe Step deleted successfully.');
+        return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe step deleted successfully');
     }
 }
