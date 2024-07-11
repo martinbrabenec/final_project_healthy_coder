@@ -2,6 +2,8 @@ namespace App\Models;
 
 <?php
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Recipe;
+use App\Models\Ingredient;
 
 class RecipeIngredient extends Model
 {
