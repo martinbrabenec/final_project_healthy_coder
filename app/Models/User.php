@@ -10,7 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'first_name', 'last_name', 'name', 'email', 'date_of_birth', 'profile_picture', 'password',
+        'first_name', 'last_name', 'name', 'email', 'password',
     ];
 
     protected $hidden = [
@@ -19,13 +19,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'date_of_birth' => 'date',
     ];
-
-    public function activities()
-    {
-        return $this->belongsToMany(Activity::class, 'user_activities');
-    }
 
     public function recipes()
     {

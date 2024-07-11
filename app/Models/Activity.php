@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $fillable = [
-        'name', 'description', 'activity_type', 'body_zone', 'image',
+        'name', 'description', 'activity_type', 'body_zone', 'image'
     ];
 
-    public function users()
+    public function userActivities()
     {
-        return $this->belongsToMany(User::class, 'user_activities');
+        return $this->hasMany(UserActivity::class);
     }
 }
