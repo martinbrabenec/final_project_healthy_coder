@@ -10,18 +10,25 @@ function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchRecipes();
   }, []);
 
   const fetchRecipes = () => {
+    setIsLoading(true);
+    setError(null);
     axios.get(`${API_BASE_URL}/recipes`)
       .then(response => {
         setRecipes(response.data);
       })
       .catch(error => {
-        console.error('Error fetching recipes:', error);
+        setError('Error fetching recipes: ' + error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -29,14 +36,18 @@ function Recipes() {
     <div>
       <h2>All Recipes</h2>
       <Button variant="primary" onClick={() => setShowAddModal(true)}>Add New Recipe</Button>
-      <div className="recipe-grid">
-        {recipes.map(recipe => (
-          <div key={recipe.id} className="recipe-card" onClick={() => setSelectedRecipe(recipe)}>
-            <img src={recipe.photo} alt={recipe.name} />
-            <div className="recipe-name">{recipe.name}</div>
-          </div>
-        ))}
-      </div>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      {!isLoading && !error && (
+        <div className="recipe-grid">
+          {recipes.map(recipe => (
+            <div key={recipe.id} className="recipe-card" onClick={() => setSelectedRecipe(recipe)}>
+              <img src={recipe.photo} alt={recipe.name} />
+              <div className="recipe-name">{recipe.name}</div>
+            </div>
+          ))}
+        </div>
+      )}
       {selectedRecipe && (
         <RecipeModal 
           recipe={selectedRecipe} 

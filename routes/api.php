@@ -26,6 +26,7 @@ Route::get('/activities/{id}', [ActivityController::class, 'show']);
 // Recipe routes
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/{id}', [RecipeController::class, 'show']);
+Route::post('/recipe/create', [RecipeController::class, 'store']);
 
 // Ingredient routes
 Route::get('/ingredients', [IngredientController::class, 'index']);
