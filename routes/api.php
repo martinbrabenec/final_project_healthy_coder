@@ -47,19 +47,3 @@ Route::get('/user-activities/{id}', [UserActivityController::class, 'show']);
 Route::get('/user-recipes', [UserRecipeController::class, 'index']);
 Route::get('/user-recipes/{id}', [UserRecipeController::class, 'show']);
 
-// Route::get('/test', function () {
-//     return response()->json([
-//         'message' => 'This is a test JSON response',
-//         'status' => 'success'
-//     ]);
-// });
-
-// Route::get('/users', [UserController::class, 'index']);
-// Route::get('/activities', [ActivityController::class, 'index']);
-
-// Route::get('/activities/{id}', [ActivityController::class, 'show']);
-
-
-// Route::put('/activities/{id}', [ActivityController::class, 'update']);
-// Route::delete('/activities/{id}', [ActivityController::class, 'destroy']);
-// Route::post('/activities', [ActivityController::class, 'store']);
