@@ -1,37 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { Link } from 'react-router-dom';
-
-// const API_BASE_URL = 'http://www.thehealthycoder.test/api';
-
-// function RecipeList() {
-//   const [recipes, setRecipes] = useState([]);
-
-//   useEffect(() => {
-//     axios.get(`${API_BASE_URL}/recipes`)
-//       .then(response => {
-//         setRecipes(response.data);
-//       })
-//       .catch(error => {
-//         console.error('Error fetching recipes:', error);
-//       });
-//   }, []);
-
-//   return (
-//     <div>
-//       <h2>All Recipes</h2>
-//       <ul>
-//         {recipes.map(recipe => (
-//           <li key={recipe.id}>
-//             <Link to={`${recipe.id}`}>{recipe.name}</Link>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
-
-// export default RecipeList;
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -46,6 +12,11 @@ function RecipeDetail() {
 
   useEffect(() => {
     if (id) {
+      // Reset states when a new recipe is selected
+      setRecipe(null);
+      setIngredients([]);
+      setSteps([]);
+
       // Fetch recipe details
       axios.get(`${API_BASE_URL}/recipes/${id}`)
         .then(response => {
@@ -64,7 +35,12 @@ function RecipeDetail() {
           ));
         })
         .then(ingredientResponses => {
-          setIngredients(ingredientResponses.map(response => response.data));
+          const ingredientsWithQuantities = ingredientResponses.map((response, index) => ({
+            ...response.data,
+            quantity: response.data.quantity,
+            unit: response.data.unit
+          }));
+          setIngredients(ingredientsWithQuantities);
         })
         .catch(error => {
           console.error('Error fetching ingredients:', error);
@@ -83,7 +59,7 @@ function RecipeDetail() {
   }, [id]);
 
   if (!recipe) {
-    return <div>Select a recipe to view details</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -92,7 +68,9 @@ function RecipeDetail() {
       <h2>Ingredients:</h2>
       <ul>
         {ingredients.map(ingredient => (
-          <li key={ingredient.id}>{ingredient.name}</li>
+          <li key={ingredient.id}>
+            {ingredient.name}: {ingredient.quantity} {ingredient.unit}
+          </li>
         ))}
       </ul>
       <h2>Steps:</h2>
