@@ -1,33 +1,3 @@
-// import React from 'react';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import Navigation from './Navigation';
-// import Home from './Home';
-// import User from './Users';  // Note: importing 'User' from 'Users.jsx'
-// import Activities from './Activities';
-// import Recipes from './Recipes';
-// import Ingredients from './Ingredients';
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <div>
-//         <Navigation />
-//         <div className="container mt-4">
-//           <Routes>
-//             <Route path="/" element={<Home />} />
-//             <Route path="/users" element={<User />} />  // Using 'User' component
-//             <Route path="/activities" element={<Activities />} />
-//             <Route path="/recipes" element={<Recipes />} />
-//             <Route path="/ingredients" element={<Ingredients />} />
-//           </Routes>
-//         </div>
-//       </div>
-//     </Router>
-//   );
-// };
-
-// export default App;
-
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
@@ -38,9 +8,11 @@ import User from './pages/Users';
 import Activities from './pages/Activities';
 import Recipes from './pages/Recipes';
 import Ingredients from './pages/Ingredients';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const App = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   return (
     <Router>
@@ -55,6 +27,8 @@ const App = () => {
               <Route path="/activities" element={<Activities />} />
               <Route path="/recipes" element={<Recipes />} />
               <Route path="/ingredients" element={<Ingredients />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
           </main>
         </div>

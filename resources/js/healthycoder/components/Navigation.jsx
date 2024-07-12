@@ -32,6 +32,8 @@ const Navigation = () => {
           <Link className="nav-link" to="/activities">Activities</Link>
           <Link className="nav-link" to="/recipes">Recipes</Link>
           <Link className="nav-link" to="/ingredients">Ingredients</Link>
+          <Link className="nav-link" to="/login">Login</Link>
+          <Link className="nav-link" to="/register">Register</Link>
         </div>
       </div>
     </nav>
