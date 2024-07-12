@@ -26,21 +26,21 @@ function RecipeDetail() {
           console.error('Error fetching recipe:', error);
         });
 
-      // Fetch recipe ingredients
+      // Fetch recipe ingredients with quantities and units
       axios.get(`${API_BASE_URL}/recipe-ingredients`)
         .then(response => {
           const recipeIngredients = response.data.filter(item => item.recipe_id === parseInt(id));
           return Promise.all(recipeIngredients.map(item => 
             axios.get(`${API_BASE_URL}/ingredients/${item.ingredient_id}`)
+              .then(ingredientResponse => ({
+                ...ingredientResponse.data,
+                quantity: item.quantity,
+                unit: item.unit
+              }))
           ));
         })
-        .then(ingredientResponses => {
-          const ingredientsWithQuantities = ingredientResponses.map((response, index) => ({
-            ...response.data,
-            quantity: response.data.quantity,
-            unit: response.data.unit
-          }));
-          setIngredients(ingredientsWithQuantities);
+        .then(ingredientsWithDetails => {
+          setIngredients(ingredientsWithDetails);
         })
         .catch(error => {
           console.error('Error fetching ingredients:', error);
@@ -69,7 +69,7 @@ function RecipeDetail() {
       <ul>
         {ingredients.map(ingredient => (
           <li key={ingredient.id}>
-            {ingredient.name}: {ingredient.quantity} {ingredient.unit}
+            {ingredient.quantity} {ingredient.unit} {ingredient.name}
           </li>
         ))}
       </ul>
