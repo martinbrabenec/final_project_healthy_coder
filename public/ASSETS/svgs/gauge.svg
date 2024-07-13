@@ -1,0 +1,13 @@
+<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF0000"/>
+            <stop offset="25%" stop-color="#FFA500"/>
+            <stop offset="50%" stop-color="#FFFF00"/>
+            <stop offset="75%" stop-color="#90EE90"/>
+            <stop offset="100%" stop-color="#008000"/>
+        </linearGradient>
+    </defs>
+    <path d="M5 45 A 40 40 0 0 1 95 45" fill="none" stroke="url(#gaugeGradient)" stroke-width="10"/>
+    <path id="pointer" d="M50 45 L48 5 L52 5 Z" fill="#808080"/>
+</svg>

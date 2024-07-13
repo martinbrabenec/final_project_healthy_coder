@@ -1,0 +1,29 @@
+<svg width="200" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Head -->
+  <circle id="head" cx="100" cy="50" r="40" fill="#6ed3cf" />
+
+  <!-- Neck -->
+  <rect id="neck" x="90" y="90" width="20" height="20" fill="#6ed3cf" />
+
+  <!-- Upper body -->
+  <rect id="upper_body" x="60" y="110" width="80" height="100" fill="#6ed3cf" />
+
+  <!-- Arms -->
+  <rect id="left_arm" x="40" y="110" width="20" height="80" fill="#6ed3cf" />
+  <rect id="right_arm" x="140" y="110" width="20" height="80" fill="#6ed3cf" />
+
+  <!-- Forearms -->
+  <rect id="left_forearm" x="30" y="190" width="20" height="80" fill="#6ed3cf" />
+  <rect id="right_forearm" x="150" y="190" width="20" height="80" fill="#6ed3cf" />
+
+  <!-- Lower body -->
+  <rect id="lower_body" x="75" y="210" width="50" height="80" fill="#6ed3cf" />
+
+  <!-- Legs -->
+  <rect id="left_leg" x="75" y="290" width="20" height="150" fill="#6ed3cf" />
+  <rect id="right_leg" x="105" y="290" width="20" height="150" fill="#6ed3cf" />
+
+  <!-- Lower Legs -->
+  <rect id="left_lower_leg" x="75" y="440" width="20" height="60" fill="#6ed3cf" />
+  <rect id="right_lower_leg" x="105" y="440" width="20" height="60" fill="#6ed3cf" />
+</svg>
