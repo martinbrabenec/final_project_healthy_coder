@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Sidebar from './components/Sidebar';
@@ -10,23 +10,16 @@ import Recipes from './pages/Recipes';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Alternatives from './pages/Alternatives';
-import '../../css/custom.scss'; // Ensure global styles are imported
+import '../../css/custom.scss';
 
 const App = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // Assuming user is authenticated initially, set based on your auth logic
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-  }
-
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
         <Navigation />
         <div className="flex-grow-1 d-flex">
-          <Sidebar visible={sidebarVisible} setVisible={setSidebarVisible} />
-          <main className={`flex-grow-1 p-3 ${sidebarVisible ? 'main-with-sidebar' : ''}`}>
+          <Sidebar />
+          <main className="flex-grow-1 p-3 main-with-sidebar">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/users" element={<User />} />
@@ -38,7 +31,7 @@ const App = () => {
             </Routes>
           </main>
         </div>
-        <Footer onLogout={handleLogout} />
+        <Footer />
       </div>
     </Router>
   );

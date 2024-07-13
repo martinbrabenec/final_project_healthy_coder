@@ -6,7 +6,7 @@
 }
 
 body {
-  transition: margin-left 0.3s ease-in-out;
+  margin-left: 250px; /* Width of the sidebar */
 }
 
 .main-with-sidebar {
@@ -15,7 +15,28 @@ body {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  body {
+    margin-left: 0;
+  }
+
   .main-with-sidebar {
     margin-left: 0;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .sidebar-buttons {
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .btn-custom {
+    flex: 1 1 auto;
+    margin: 5px;
   }
 }
