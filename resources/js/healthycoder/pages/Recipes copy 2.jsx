@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../../../css/recipes.scss'; // Using the new CSS file
+import '../../../css/recipe.scss'; // Using the same CSS file
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
@@ -26,10 +26,10 @@ function Recipes() {
           
           return (
             <div className="col-md-3 col-sm-6 mb-4" key={recipe.id}>
-              <div className="card h-100 recipe-card">
+              <div className="card h-100">
                 <div className="image-container">
-                  <img src={imageUrl} alt={recipe.name} className="card-img-top" />
-                  <div className="recipe-name">
+                  <img src={imageUrl} alt={recipe.name} className="card-img-top activity-image" />
+                  <div className="overlay">
                     <Link to={`/recipes/${recipe.id}`} className="activity-name">{recipe.name}</Link>
                   </div>
                 </div>

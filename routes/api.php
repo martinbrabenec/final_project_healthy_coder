@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\RecipeStepController;
 use App\Http\Controllers\Api\UserActivityController;
 use App\Http\Controllers\Api\UserRecipeController;
 use App\Http\Controllers\Api\IngredientController; // Add this line
+use App\Http\Controllers\AlternativeActivityController;
 
 
 // Remove the duplicate import statement for RecipeController
@@ -48,3 +49,8 @@ Route::get('/user-activities/{id}', [UserActivityController::class, 'show']);
 Route::get('/user-recipes', [UserRecipeController::class, 'index']);
 Route::get('/user-recipes/{id}', [UserRecipeController::class, 'show']);
 
+Route::get('alternative_activities', [AlternativeActivityController::class, 'index']);
+Route::get('alternative_activities/{id}', [AlternativeActivityController::class, 'show']);
+Route::post('alternative_activities', [AlternativeActivityController::class, 'store']);
+Route::put('alternative_activities/{id}', [AlternativeActivityController::class, 'update']);
+Route::delete('alternative_activities/{id}', [AlternativeActivityController::class, 'destroy']);

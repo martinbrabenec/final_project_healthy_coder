@@ -1,0 +1,9 @@
+.footer {
+  background-color: var(--pastel-green) !important;
+  transition: opacity 0.3s ease-in-out;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+  opacity: 1;
+}

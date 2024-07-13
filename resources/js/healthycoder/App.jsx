@@ -11,6 +11,8 @@ import RecipeDetail from './components/RecipeDetail';
 import Ingredients from './pages/Ingredients';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Alternatives from './pages/Alternatives';
+import '../../css/custom.scss'; // Ensure global styles are imported
 
 const App = () => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
@@ -36,6 +38,8 @@ const App = () => {
               <Route path="/ingredients" element={<Ingredients />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/alternatives" element={<Alternatives />} />
+        
             </Routes>
           </main>
         </div>

@@ -1,33 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import LogoutButton from './LogoutButton';
+import React from 'react';
+import '../../../css/footer.scss'; // Import specific styles for Footer
 
-const Footer = ({ onLogout }) => {
-  const [visible, setVisible] = useState(true);
-  let timeout;
-
-  useEffect(() => {
-    const handleMouseMove = () => {
-      setVisible(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setVisible(false), 3000);
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(timeout);
-    };
-  }, []);
-
-  return (
-    <footer className={`footer mt-auto py-3 bg-light ${visible ? 'visible' : ''}`}>
-      <div className="container text-center d-flex justify-content-between">
-        <span className="text-muted">© 2023 Healthy Coder App. All rights reserved.</span>
-        <LogoutButton onLogout={onLogout} />
-      </div>
-    </footer>
-  );
-};
+const Footer = ({ onLogout }) => (
+  <footer className="footer">
+    <div className="container">
+      <span className="text-muted">Healthy Coder App &copy; 2024</span>
+      <button className="btn btn-link" onClick={onLogout}>Logout</button>
+    </div>
+  </footer>
+);
 
 export default Footer;
+
