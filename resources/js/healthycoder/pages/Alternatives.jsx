@@ -1,50 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import '../../../css/alternatives.scss';
 
 function Alternatives() {
-  const [activities, setActivities] = useState([]);
+  const [alternativeActivities, setAlternativeActivities] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12; // 3 rows of 4 items
 
   useEffect(() => {
     axios.get('/api/alternative_activities')
       .then(response => {
-        setActivities(response.data);
+        setAlternativeActivities(response.data);
       })
       .catch(error => {
         console.error('Error fetching alternative activities:', error);
       });
   }, []);
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = alternativeActivities.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const pageCount = Math.ceil(alternativeActivities.length / itemsPerPage);
+
   return (
     <div className="container">
       <h2 className="my-4">Alternative Activities</h2>
       <div className="row">
-        {activities.map(activity => {
+        {currentItems.map(activity => {
           const imagePath = `/assets/alternative_activities/${activity.link_to_photo}`;
-          console.log('Image path:', imagePath);  // Log the path to the image
           return (
-            <div className="col-md-3 col-sm-6 mb-4" key={activity.id}>
-              <div className="card h-100">
-                <div className="image-container">
-                  <img src={imagePath} alt={activity.alternative_activity} className="card-img-top activity-image" />
-                  <div className="overlay">
-                    <Link to={`/alternative_activities/${activity.id}`} className="activity-name">{activity.alternative_activity}</Link>
+            <div className="col-md-3" key={activity.id}>
+              <div className="card-container">
+                <div className="card-flipper">
+                  <div className="card-front">
+                    <img src={imagePath} alt={activity.alternative_activity} />
                   </div>
-                </div>
-                <div className="card-body">
-                  <h5 className="card-title">{activity.alternative_activity}</h5>
-                  <p className="card-text">
+                  <div className="card-back">
+                    <h3>{activity.alternative_activity}</h3>
                     <a href={activity.external_info} target="_blank" rel="noopener noreferrer">
                       Learn more
                     </a>
-                  </p>
-                  <p className="card-text">Created at: {new Date(activity.created_at).toLocaleString()}</p>
-                  <p className="card-text">Updated at: {new Date(activity.updated_at).toLocaleString()}</p>
+                  </div>
                 </div>
               </div>
             </div>
           );
         })}
+      </div>
+      <div className="pagination-container">
+        {pageCount > 1 && (
+          <div className="pagination">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button 
+                key={i} 
+                onClick={() => paginate(i + 1)} 
+                className={currentPage === i + 1 ? 'active' : ''}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

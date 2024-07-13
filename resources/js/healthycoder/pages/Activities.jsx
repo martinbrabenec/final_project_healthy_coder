@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../../css/activities.scss';
 
-
 function Activities() {
   const [activities, setActivities] = useState([]);
 
