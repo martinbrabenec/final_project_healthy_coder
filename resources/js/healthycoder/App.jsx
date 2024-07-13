@@ -7,8 +7,6 @@ import Home from './pages/Home';
 import User from './pages/Users';
 import Activities from './pages/Activities';
 import Recipes from './pages/Recipes';
-import RecipeDetail from './components/RecipeDetail';
-import Ingredients from './pages/Ingredients';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Alternatives from './pages/Alternatives';
@@ -34,8 +32,6 @@ const App = () => {
               <Route path="/users" element={<User />} />
               <Route path="/activities" element={<Activities />} />
               <Route path="/recipes" element={<Recipes />} />
-              <Route path="/recipes/:id" element={<RecipeDetail />} />
-              <Route path="/ingredients" element={<Ingredients />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/alternatives" element={<Alternatives />} />
