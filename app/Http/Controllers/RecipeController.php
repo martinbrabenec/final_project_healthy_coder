@@ -2,121 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recipe;
-use App\Models\Ingredient;
 use Illuminate\Http\Request;
+use App\Models\Recipe;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class RecipeController extends Controller
 {
-    public function index()
-    {
-        $recipes = Recipe::all();
-        return view('recipes.index', compact('recipes'));
-    }
-
-    public function create()
-    {
-        $ingredients = Ingredient::all();
-        return view('recipes.create', compact('ingredients'));
-    }
-
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'is_vegetarian' => 'required|boolean',
-            'photo' => 'nullable|image|max:2048',
-            'ingredients' => 'required|array',
-            'ingredients.*.id' => 'required|exists:ingredients,id',
-            'ingredients.*.quantity' => 'required|numeric',
-            'ingredients.*.unit' => 'required|string',
-            'steps' => 'required|array',
-            'steps.*.description' => 'required|string',
-        ]);
+        Log::info('Incoming request data', $request->all());
 
-        if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('recipes', 'public');
-            $validated['photo'] = $path;
-        }
-
-        $recipe = Recipe::create($validated);
-
-        foreach ($validated['ingredients'] as $ingredientData) {
-            $recipe->ingredients()->attach($ingredientData['id'], [
-                'quantity' => $ingredientData['quantity'],
-                'unit' => $ingredientData['unit'],
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'photo' => 'nullable|string|max:255',
+                'is_vegetarian' => 'required|boolean',
             ]);
-        }
 
-        foreach ($validated['steps'] as $index => $step) {
-            $recipe->steps()->create([
-                'step_number' => $index + 1,
-                'description' => $step['description'],
+            // Convert boolean to integer (0 or 1)
+            $validatedData['is_vegetarian'] = $validatedData['is_vegetarian'] ? 1 : 0;
+
+            $recipe = Recipe::create($validatedData);
+
+            Log::info('Recipe created successfully', ['recipe' => $recipe]);
+            return response()->json($recipe, 201);
+
+        } catch (ValidationException $e) {
+            Log::error('Validation failed', [
+                'errors' => $e->errors(),
+                'request' => $request->all()
             ]);
-        }
-
-        return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe created successfully');
-    }
-
-    public function show(Recipe $recipe)
-    {
-        $recipe->load('ingredients', 'steps');
-        return view('recipes.show', compact('recipe'));
-    }
-
-    public function edit(Recipe $recipe)
-    {
-        $ingredients = Ingredient::all();
-        $recipe->load('ingredients', 'steps');
-        return view('recipes.edit', compact('recipe', 'ingredients'));
-    }
-
-    public function update(Request $request, Recipe $recipe)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'is_vegetarian' => 'required|boolean',
-            'photo' => 'nullable|image|max:2048',
-            'ingredients' => 'required|array',
-            'ingredients.*.id' => 'required|exists:ingredients,id',
-            'ingredients.*.quantity' => 'required|numeric',
-            'ingredients.*.unit' => 'required|string',
-            'steps' => 'required|array',
-            'steps.*.description' => 'required|string',
-        ]);
-
-        if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('recipes', 'public');
-            $validated['photo'] = $path;
-        }
-
-        $recipe->update($validated);
-
-        $recipe->ingredients()->detach();
-        foreach ($validated['ingredients'] as $ingredientData) {
-            $recipe->ingredients()->attach($ingredientData['id'], [
-                'quantity' => $ingredientData['quantity'],
-                'unit' => $ingredientData['unit'],
+            return response()->json([
+                'message' => 'The given data was invalid.',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Error creating recipe', [
+                'message' => $e->getMessage(),
+                'request' => $request->all()
             ]);
+            return response()->json([
+                'message' => 'An error occurred while creating the recipe.',
+            ], 500);
         }
-
-        $recipe->steps()->delete();
-        foreach ($validated['steps'] as $index => $step) {
-            $recipe->steps()->create([
-                'step_number' => $index + 1,
-                'description' => $step['description'],
-            ]);
-        }
-
-        return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe updated successfully');
     }
 
-    public function destroy(Recipe $recipe)
-    {
-        $recipe->ingredients()->detach();
-        $recipe->steps()->delete();
-        $recipe->delete();
-
-        return redirect()->route('recipes.index')->with('success', 'Recipe deleted successfully');
-    }
+    // ... other methods ...
 }

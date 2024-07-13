@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import LogoutButton from './LogoutButton';
 
-const Footer = () => {
+const Footer = ({ onLogout }) => {
   const [visible, setVisible] = useState(true);
   let timeout;
 
@@ -21,8 +22,9 @@ const Footer = () => {
 
   return (
     <footer className={`footer mt-auto py-3 bg-light ${visible ? 'visible' : ''}`}>
-      <div className="container text-center">
+      <div className="container text-center d-flex justify-content-between">
         <span className="text-muted">© 2023 Healthy Coder App. All rights reserved.</span>
+        <LogoutButton onLogout={onLogout} />
       </div>
     </footer>
   );

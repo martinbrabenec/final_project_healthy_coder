@@ -14,6 +14,11 @@ import Register from './pages/Register';
 
 const App = () => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // Assuming user is authenticated initially, set based on your auth logic
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  }
 
   return (
     <Router>
@@ -34,7 +39,7 @@ const App = () => {
             </Routes>
           </main>
         </div>
-        <Footer />
+        <Footer onLogout={handleLogout} />
       </div>
     </Router>
   );
