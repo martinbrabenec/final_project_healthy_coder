@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $activities = Activity::all();
+        $bodyZone = $request->query('body_zone');
+        
+        if ($bodyZone) {
+            $activities = Activity::where('body_zone', $bodyZone)->get();
+        } else {
+            $activities = Activity::all();
+        }
+        
         return response()->json($activities);
     }
 

@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             RecipeIngredientsTableSeeder::class,
             RecipeStepsTableSeeder::class,
             ActivitiesTableSeeder::class,
+            AdditionalActivitiesSeeder::class,
         ]);
     }
 }

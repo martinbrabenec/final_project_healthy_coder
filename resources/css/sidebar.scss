@@ -6,6 +6,7 @@
   width: 250px;
   padding: 20px;
   z-index: 1000;
+  overflow-y: auto;
 }
 
 .sidebar-buttons {
@@ -27,4 +28,16 @@
     color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
+}
+
+.activities-list {
+  margin-top: 20px;
+}
+
+.activity-item {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
