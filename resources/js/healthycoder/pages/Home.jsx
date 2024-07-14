@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
-import PhotoGrid from '../components/PhotoGrid';
+import React from 'react';
 import Sidebar from '../components/Sidebar';
 
 const Home = () => {
-  const [selectedZone, setSelectedZone] = useState('');
-
   return (
     <div className="container-fluid">
-      <Sidebar onSelectZone={setSelectedZone} />
+      <Sidebar />
       <div className="content">
-        <div className="quote-of-the-day">
+        <div className="quote-container">
+          <p className="quote-text">Quote of the day: "Your inspirational quote here."</p>
         </div>
-        <h1 className="mb-4">Welcome to the Healthy Coder App</h1>
-        <div className="row">
-          <div className="col-md-6">
-            <PhotoGrid />
-          </div>
-          <div className="col-md-6">
-            <PhotoGrid />
+        <h1 className="mb-4 text-center">Welcome to the Healthy Coder App</h1>
+        <div className="d-flex justify-content-center">
+          <div className="card-deck">
+            <div className="card">
+              <img src="path_to_your_image" className="card-img-top" alt="Description" />
+              <div className="card-body">
+                <h5 className="card-title">Card title</h5>
+                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+            <div className="card">
+              <img src="path_to_your_image" className="card-img-top" alt="Description" />
+              <div className="card-body">
+                <h5 className="card-title">Card title</h5>
+                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+            <div className="card">
+              <img src="path_to_your_image" className="card-img-top" alt="Description" />
+              <div className="card-body">
+                <h5 className="card-title">Card title</h5>
+                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

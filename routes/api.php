@@ -18,11 +18,13 @@ use App\Http\Controllers\AlternativeActivityController;
 // User routes
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
+Route::get('/users/{body_zone}', [UserController::class, 'showbyzone']);
 
 
 // Activity routes
 Route::get('/activities', [ActivityController::class, 'index']);
 Route::get('/activities/{id}', [ActivityController::class, 'show']);
+Route::get('/activities/filter', [ActivityController::class, 'filterByBodyZone']);
 
 // Recipe routes
 Route::get('/recipes', [RecipeController::class, 'index']);
