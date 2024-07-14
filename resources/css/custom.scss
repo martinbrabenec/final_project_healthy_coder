@@ -1,3 +1,4 @@
+
 :root {
   --pastel-blue: #A8D8EA;
   --pastel-green: #CCEDD2;
@@ -6,11 +7,11 @@
 }
 
 body {
-  margin-left: 250px; /* Width of the sidebar */
+  margin: 0;
 }
 
 .main-with-sidebar {
-  margin-left: 250px;
+  margin-left: 0;
 }
 
 /* Responsive adjustments */
@@ -21,22 +22,5 @@ body {
 
   .main-with-sidebar {
     margin-left: 0;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-
-  .sidebar-buttons {
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-
-  .btn-custom {
-    flex: 1 1 auto;
-    margin: 5px;
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import User from './pages/Users';
@@ -17,9 +16,8 @@ const App = () => {
     <Router>
       <div className="d-flex flex-column min-vh-100">
         <Navigation />
-        <div className="flex-grow-1 d-flex">
-          <Sidebar />
-          <main className="flex-grow-1 p-3 main-with-sidebar">
+        <div className="flex-grow-1 d-flex flex-column">
+          <main className="flex-grow-1 p-3">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/users" element={<User />} />

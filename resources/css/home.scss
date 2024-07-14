@@ -1,40 +1,26 @@
-.sidebar-custom {
-    padding-top: 20px;
-    padding-left: 10px;
-    border-right: 2px solid #ddd;
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: fixed;
+  top: 80px; /* Adjust based on your navbar height */
+  left: 0;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.btn-custom {
+  width: 150px;
+  background-color: transparent;
+  border: 2px solid var(--pastel-blue);
+  color: #333;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--pastel-blue);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
-  
-  .btn-custom {
-    width: 80%;
-    border-radius: 20px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    text-align: center;
-  }
-  
-  .btn-custom:hover {
-    background-color: #0056b3;
-    color: #fff;
-  }
-  
-  .photo-grid {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .photo-frame {
-    border: 2px solid #ddd;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-  
-  .photo-frame img {
-    border-radius: 8px;
-    max-width: 100%;
-    height: auto;
-  }
-  
+}
