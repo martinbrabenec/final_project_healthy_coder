@@ -1,0 +1,17 @@
+.quote-bar {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #f8f9fa; // Or whatever color you prefer
+    border-bottom: 1px solid #e9ecef; // Optional: adds a subtle border
+    position: fixed;
+    top: 100px; // Adjust this value to match your navbar height
+    left: 0;
+    z-index: 1000; // Ensure it's above other content
+  }
+  
+  .quote-text {
+    text-align: center;
+    margin: 0;
+    font-style: italic;
+    color: #6c757d; // Adjust color as needed
+  }
