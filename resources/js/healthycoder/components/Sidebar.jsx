@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../../css/sidebar.scss';
 
-const Sidebar = () => {
+const Sidebar = ({ onActivitySelect }) => {
   const [activities, setActivities] = useState([]);
-  const [filteredActivities, setFilteredActivities] = useState([]);
-  const [selectedZone, setSelectedZone] = useState(null);
 
   useEffect(() => {
     fetchActivities();
@@ -21,24 +19,12 @@ const Sidebar = () => {
   };
 
   const handleButtonClick = (bodyZone) => {
-    setSelectedZone(bodyZone);
-    const filtered = activities.filter(activity => activity.body_zone === bodyZone);
-    setFilteredActivities(filtered);
-  };
-
-  const renderActivities = () => {
-    if (!selectedZone) return null;
-    
-    return (
-      <div className="filtered-activities">
-        <h3>{selectedZone} Activities</h3>
-        <ul>
-          {filteredActivities.map(activity => (
-            <li key={activity.id}>{activity.name}</li>
-          ))}
-        </ul>
-      </div>
-    );
+    if (typeof onActivitySelect === 'function') {
+      const filtered = activities.filter(activity => activity.body_zone === bodyZone);
+      onActivitySelect(filtered, bodyZone);
+    } else {
+      console.error('onActivitySelect is not a function');
+    }
   };
 
   return (
@@ -51,7 +37,6 @@ const Sidebar = () => {
         <button className="btn btn-custom" onClick={() => handleButtonClick('Lower Body')}>Lower Body</button>
         <button className="btn btn-custom" onClick={() => handleButtonClick('General')}>General</button>
       </div>
-      {renderActivities()}
     </div>
   );
 };

@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import QuoteBar from '../components/QuoteBar';
+import ActivityList from '../components/ActivityList';
 import '../../../css/home.scss';
 
 const Home = () => {
+  const [filteredActivities, setFilteredActivities] = useState([]);
+  const [selectedZone, setSelectedZone] = useState(null);
+
+  const handleActivitySelect = (activities, zone) => {
+    setFilteredActivities(activities);
+    setSelectedZone(zone);
+  };
+
   return (
     <div className="container-fluid p-0">
-      <Sidebar />
-      <QuoteBar />
+      <Sidebar onActivitySelect={handleActivitySelect} />
       <div className="content">
+        <QuoteBar />
         <div className="main-content">
           <h1 className="mb-4 text-center">Welcome to the Healthy Coder App</h1>
+          
+          <ActivityList activities={filteredActivities} selectedZone={selectedZone} />
+          
           <div className="d-flex justify-content-center">
             <div className="card-deck">
               {[1, 2, 3].map((index) => (
