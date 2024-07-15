@@ -13,7 +13,7 @@ const Sidebar = () => {
 
   const fetchActivities = async () => {
     try {
-      const response = await axios.get('http://www.thehealthycoder.test/api/activities');
+      const response = await axios.get('/api/activities');
       setActivities(response.data);
     } catch (error) {
       console.error('Error fetching activities:', error);

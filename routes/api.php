@@ -20,9 +20,9 @@ Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 
 // Activity routes
+Route::post('/activities/create', [ActivityController::class, 'store']);
 Route::get('/activities', [ActivityController::class, 'index']);
 Route::get('/activities/{id}', [ActivityController::class, 'show']);
-Route::get('/activities/{body_zone}', [ActivityController::class, 'filter']);
 
 // Recipe routes
 Route::get('/recipes', [RecipeController::class, 'index']);
