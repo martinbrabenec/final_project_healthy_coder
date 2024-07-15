@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Login(props) {
-
     const [values, setValues] = useState({
         email: '',
         password: ''
     });
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -21,38 +22,41 @@ export default function Login(props) {
         // Get the CSRF token from the meta tag
         const csrfToken = csrfTokenElement.getAttribute('content');
 
-        // Make the AJAX request
-        const response = await fetch('/login', {
-            method: 'POST',
-            body: JSON.stringify(values),
-            headers: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
+        try {
+            // Make the AJAX request using axios
+            const response = await axios.post('/login', values, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            // If login is successful, redirect to home page
+            if (response.status === 200) {
+                navigate('/');
             }
-        });
-
-        // Parse the response as JSON
-        const response_data = await response.json();
-
-        // If the response code is not 2xx (success)
-        if (Math.floor(response.status / 100) !== 2) {
-            switch (response.status) {
-                case 422:
-                    // Handle validation errors here
-                    console.log('VALIDATION FAILED:', response_data.errors);
-                    break;
-                default:
-                    console.log('UNKNOWN ERROR', response_data);
-                    break;
+        } catch (error) {
+            if (error.response) {
+                switch (error.response.status) {
+                    case 422:
+                        // Handle validation errors here
+                        console.log('VALIDATION FAILED:', error.response.data.errors);
+                        break;
+                    default:
+                        console.log('UNKNOWN ERROR', error.response.data);
+                        break;
+                }
+            } else {
+                console.log('ERROR', error.message);
             }
         }
     };
 
     const handleChange = (event) => {
-        setValues(previous_values => {
-            return ({ ...previous_values, [event.target.name]: event.target.value });
-        });
+        setValues(previous_values => ({
+            ...previous_values, [event.target.name]: event.target.value
+        }));
     };
 
     return (
