@@ -27,4 +27,9 @@ class Recipe extends Model
     {
         return $this->belongsToMany(User::class, 'user_recipes');
     }
+
+    public function getNameAndDescriptionAttribute()
+    {
+        return "{$this->name}";
+    }
 }

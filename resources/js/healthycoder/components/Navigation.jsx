@@ -1,7 +1,8 @@
+// src/components/Navigation.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa';
 import '../../../css/navigation.scss';
+import SearchBar from './Searchbar';
 
 const Navigation = () => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -38,14 +39,7 @@ const Navigation = () => (
           </li>
         </ul>
       </div>
-      <div className="search-container">
-        <div className="input-group">
-          <input type="text" className="form-control custom-search" placeholder="Search" aria-label="Search" />
-          <button className="btn btn-outline-secondary search-button" type="button">
-            <FaSearch />
-          </button>
-        </div>
-      </div>
+      <SearchBar />
     </div>
   </nav>
 );

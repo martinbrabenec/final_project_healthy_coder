@@ -12,4 +12,9 @@ class AlternativeActivity extends Model
     protected $fillable = [
         'alternative_activity', 'link_to_photo', 'external_info'
     ];
+
+    public function getNameAndDescriptionAttribute()
+    {
+        return $this->alternative_activity;
+    }
 }

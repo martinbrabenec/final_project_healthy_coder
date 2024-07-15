@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../../../css/recipes.scss'; // Using the new CSS file
+import '../../../css/recipes.scss';
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
@@ -22,22 +22,30 @@ function Recipes() {
       <div className="row">
         {recipes.map(recipe => {
           const imageUrl = `/assets/food images/${recipe.photo}`;
-          console.log(`Image URL: ${imageUrl}`);
           
           return (
             <div className="col-md-3 col-sm-6 mb-4" key={recipe.id}>
               <div className="card h-100 recipe-card">
                 <div className="image-container">
                   <img src={imageUrl} alt={recipe.name} className="card-img-top" />
-                  <div className="recipe-name">
-                    <Link to={`/recipes/${recipe.id}`} className="activity-name">{recipe.name}</Link>
-                  </div>
                 </div>
                 <div className="card-body">
                   <h5 className="card-title">{recipe.name}</h5>
-                  <p className="card-text">
-                    {recipe.is_vegetarian ? 'Vegetarian' : 'Non-Vegetarian'}
-                  </p>
+                  <div className="vegetarian-icon-container">
+                    {recipe.is_vegetarian ? (
+                      <div className="vegetarian-icon-wrapper">
+                        <img 
+                          src="/ASSETS/svgs/veg.svg" 
+                          alt="Vegetarian" 
+                          className="vegetarian-icon" 
+                          title="Suitable for Vegetarians"
+                        />
+                        <div className="vegetarian-tooltip">
+                          Suitable for Vegetarians
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </div>

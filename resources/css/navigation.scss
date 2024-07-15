@@ -1,3 +1,4 @@
+// src/css/navigation.scss
 .navbar {
   background-color: var(--pastel-yellow) !important;
   position: fixed;
@@ -15,6 +16,7 @@ body {
 
 .search-container {
   margin-left: auto;
+  position: relative; /* Add this for positioning search results */
 }
 
 .custom-search {
@@ -44,4 +46,32 @@ body {
     background-color: #f8f9fa !important;
     color: #495057 !important;
   }
+}
+
+.search-results {
+  position: absolute;
+  top: 100%; /* Align just below the search container */
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+.search-results ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-results li {
+  padding: 8px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.search-results li:hover {
+  background-color: #f8f8f8;
 }

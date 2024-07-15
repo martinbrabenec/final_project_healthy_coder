@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\UserActivityController;
 use App\Http\Controllers\Api\UserRecipeController;
 use App\Http\Controllers\Api\IngredientController; // Add this line
 use App\Http\Controllers\AlternativeActivityController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\DataController;
 
 
 // Remove the duplicate import statement for RecipeController
@@ -54,3 +56,7 @@ Route::get('alternative_activities/{id}', [AlternativeActivityController::class,
 Route::post('alternative_activities', [AlternativeActivityController::class, 'store']);
 Route::put('alternative_activities/{id}', [AlternativeActivityController::class, 'update']);
 Route::delete('alternative_activities/{id}', [AlternativeActivityController::class, 'destroy']);
+
+Route::get('/search', [SearchController::class, 'search']);
+
+Route::get('/data', [DataController::class, 'index']);

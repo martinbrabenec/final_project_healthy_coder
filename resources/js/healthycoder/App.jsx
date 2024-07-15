@@ -1,25 +1,19 @@
+// src/App.jsx or wherever your main Router component is located
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import Footer from './components/Footer';
 import Home from './pages/Home';
-import User from './pages/Users';
+import Users from './pages/Users';
 import Activities from './pages/Activities';
 import Recipes from './pages/Recipes';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Alternatives from './pages/Alternatives';
+import Ingredients from './components/Ingredients'; // Import Ingredients component
+import Footer from './components/Footer';
 import LogoutButton from './components/LogoutButton';
 
-import '../../css/custom.scss';
-
-const App = () => {
-  const handleLogout = () => {
-    // Add your logout logic here
-    console.log("User logged out");
-    // Redirect or update state as needed
-  };
-
+function App() {
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
@@ -28,21 +22,22 @@ const App = () => {
           <main className="flex-grow-1 p-3">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/users" element={<User />} />
+              <Route path="/users" element={<Users />} />
               <Route path="/activities" element={<Activities />} />
               <Route path="/recipes" element={<Recipes />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/alternatives" element={<Alternatives />} />
+              <Route path="/ingredients" element={<Ingredients />} /> {/* Add Ingredients route */}
             </Routes>
           </main>
         </div>
         <Footer>
-          <LogoutButton onLogout={handleLogout} />
+          {/* <LogoutButton onLogout={handleLogout} /> */}
         </Footer>
       </div>
     </Router>
   );
-};
+}
 
 export default App;

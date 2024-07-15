@@ -14,4 +14,9 @@ class Activity extends Model
     {
         return $this->hasMany(UserActivity::class);
     }
+
+    public function getNameAndDescriptionAttribute()
+    {
+        return "{$this->name}: {$this->description}";
+    }
 }
