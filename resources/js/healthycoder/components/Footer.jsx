@@ -1,14 +1,13 @@
 import React from 'react';
-import '../../../css/footer.scss'; // Import specific styles for Footer
+import '../../../css/footer.scss'; 
 
-const Footer = ({ onLogout }) => (
+const Footer = ({ children }) => (
   <footer className="footer">
-    <div className="container">
+    <div className="container d-flex justify-content-between align-items-center">
       <span className="text-muted">Healthy Coder App &copy; 2024</span>
-      <button className="btn btn-link" onClick={onLogout}>Logout</button>
+      {children}
     </div>
   </footer>
 );
 
 export default Footer;
-

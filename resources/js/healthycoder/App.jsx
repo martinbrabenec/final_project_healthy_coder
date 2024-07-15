@@ -9,9 +9,17 @@ import Recipes from './pages/Recipes';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Alternatives from './pages/Alternatives';
+import LogoutButton from './components/LogoutButton';
+
 import '../../css/custom.scss';
 
 const App = () => {
+  const handleLogout = () => {
+    // Add your logout logic here
+    console.log("User logged out");
+    // Redirect or update state as needed
+  };
+
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
@@ -29,7 +37,9 @@ const App = () => {
             </Routes>
           </main>
         </div>
-        <Footer />
+        <Footer>
+          <LogoutButton onLogout={handleLogout} />
+        </Footer>
       </div>
     </Router>
   );

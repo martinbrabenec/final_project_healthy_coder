@@ -12,28 +12,14 @@ export default function Login(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Check if the CSRF token meta tag exists
-        const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
-        if (!csrfTokenElement) {
-            console.error('CSRF token not found');
-            return;
-        }
-
-        // Get the CSRF token from the meta tag
-        const csrfToken = csrfTokenElement.getAttribute('content');
 
         try {
             // Make the AJAX request using axios
-            const response = await axios.post('/login', values, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
-                }
-            });
+            const response = await axios.post('/login', values);
 
             // If login is successful, redirect to home page
             if (response.status === 200) {
+                
                 navigate('/');
             }
         } catch (error) {
