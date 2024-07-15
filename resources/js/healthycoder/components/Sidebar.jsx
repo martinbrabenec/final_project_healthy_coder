@@ -11,7 +11,7 @@ const Sidebar = ({ onActivitySelect }) => {
 
   const fetchActivities = async () => {
     try {
-      const response = await axios.get('/api/activities');
+      const response = await axios.get('http://www.thehealthycoder.test/api/activities');
       setActivities(response.data);
     } catch (error) {
       console.error('Error fetching activities:', error);
@@ -19,12 +19,8 @@ const Sidebar = ({ onActivitySelect }) => {
   };
 
   const handleButtonClick = (bodyZone) => {
-    if (typeof onActivitySelect === 'function') {
-      const filtered = activities.filter(activity => activity.body_zone === bodyZone);
-      onActivitySelect(filtered, bodyZone);
-    } else {
-      console.error('onActivitySelect is not a function');
-    }
+    const filteredActivities = activities.filter(activity => activity.body_zone === bodyZone);
+    onActivitySelect(filteredActivities, bodyZone);
   };
 
   return (
