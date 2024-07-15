@@ -26,6 +26,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     @vite('resources/css/app.scss')
     @vite('resources/js/app.js')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <div id="root"></div>
