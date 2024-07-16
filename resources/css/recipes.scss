@@ -51,6 +51,7 @@
 .card-title {
   margin-bottom: 10px;
   font-size: 1.1rem;
+  cursor: pointer; /* Add cursor pointer for title */
 }
 
 .vegetarian-icon-container {
@@ -79,7 +80,7 @@
   padding: 5px;
   position: absolute;
   z-index: 1;
-  bottom: 22px; /* Adjusted to lower the tooltip */
+  bottom: 30px; /* Adjusted to lower the tooltip */
   right: 20px;  /* Adjusted to move the tooltip to the left */
   opacity: 0;
   transition: opacity 0.3s, visibility 0.3s;
@@ -99,6 +100,53 @@
 .vegetarian-icon-wrapper:hover .vegetarian-tooltip {
   visibility: visible;
   opacity: 1;
+}
+
+// Modal styles
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh; /* Ensure the modal does not exceed the viewport height */
+  overflow-y: auto; /* Make the modal content scrollable */
+  position: relative;
+}
+
+button {
+  background-color: #555;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+input, textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 // Responsive adjustments

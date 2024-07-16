@@ -8,6 +8,7 @@ const Home = () => {
   const [activities, setActivities] = useState([]);
   const [filteredActivities, setFilteredActivities] = useState([]);
   const [selectedZone, setSelectedZone] = useState(null);
+  const [counter, setCounter] = useState(0); // Counter state
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -19,6 +20,31 @@ const Home = () => {
       }
     };
     fetchActivities();
+  }, []);
+
+  useEffect(() => {
+    // Start the counter
+    const startTime = Date.now();
+    const interval = setInterval(() => {
+      setCounter((prevCounter) => prevCounter + 1);
+    }, 1000); // Update counter every second
+
+    // Reset the counter at midnight
+    const resetTime = () => {
+      const now = new Date();
+      const nextMidnight = new Date();
+      nextMidnight.setHours(24, 0, 0, 0); // Set to midnight
+      return nextMidnight - now;
+    };
+
+    const timeout = setTimeout(() => {
+      setCounter(0); // Reset counter
+    }, resetTime());
+
+    return () => {
+      clearInterval(interval); // Cleanup interval
+      clearTimeout(timeout); // Cleanup timeout
+    };
   }, []);
 
   const handleActivitySelect = (filtered, zone) => {
@@ -33,7 +59,9 @@ const Home = () => {
         <QuoteBar />
         <div className="main-content">
           <h1 className="mb-4 text-center">Welcome to the Healthy Coder App</h1>
-          
+          <div className="counter mb-4 text-center">
+            Time spent on the app today: {Math.floor(counter / 60)} minutes {counter % 60} seconds
+          </div>
           {selectedZone && (
             <div>
               <h2>{selectedZone} Activities</h2>
@@ -44,7 +72,6 @@ const Home = () => {
               </ul>
             </div>
           )}
-          
           <div className="card-container">
             {(selectedZone ? filteredActivities : activities).map((activity) => (
               <div key={activity.id} className="card">

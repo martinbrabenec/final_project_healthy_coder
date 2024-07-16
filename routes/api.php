@@ -27,9 +27,12 @@ Route::get('/activities', [ActivityController::class, 'index']);
 Route::get('/activities/{id}', [ActivityController::class, 'show']);
 
 // Recipe routes
+Route::post('/recipes/create', [RecipeController::class, 'store']);
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/{id}', [RecipeController::class, 'show']);
-Route::post('/recipes/create', [RecipeController::class, 'store']);
+Route::put('/recipes/{id}', [RecipeController::class, 'update']);
+Route::delete('/recipes/{id}', [RecipeController::class, 'destroy']);
+
 
 // Ingredient routes
 Route::get('/ingredients', [IngredientController::class, 'index']);

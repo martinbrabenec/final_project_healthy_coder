@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class RecipeStep extends Model
 {
-    protected $fillable = [
-        'recipe_id', 'step_number', 'description',
-    ];
+    use HasFactory;
+
+    public $timestamps = false;
+
+    protected $fillable = ['description', 'step_number'];
 
     public function recipe()
     {

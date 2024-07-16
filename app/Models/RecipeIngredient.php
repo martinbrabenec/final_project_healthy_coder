@@ -1,22 +1,17 @@
 <?php
+
 namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Recipe;
-use App\Models\Ingredient;
 
 class RecipeIngredient extends Model
 {
-    protected $fillable = [
-        'recipe_id',
-        'ingredient_id',
-        'quantity',
-        'unit'
-    ];
+    use HasFactory;
 
-    public function recipe()
-    {
-        return $this->belongsTo(Recipe::class);
-    }
+    public $timestamps = false;
+
+    protected $fillable = ['ingredient_id', 'quantity', 'unit'];
 
     public function ingredient()
     {
