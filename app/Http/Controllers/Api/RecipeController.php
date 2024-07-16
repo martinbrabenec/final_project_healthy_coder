@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Recipe;
 use App\Models\RecipeIngredient;
 use App\Models\RecipeStep;
+use App\Models\Ingredient;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class RecipeController extends Controller
 {
@@ -24,79 +27,153 @@ class RecipeController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'photo' => 'required|string', // Changed from 'url' to 'string'
-            'is_vegetarian' => 'required|boolean',
-            'ingredients' => 'required|array',
-            'steps' => 'required|array'
-        ]);
+        Log::info('Incoming request data for new recipe', $request->all());
 
-        $recipe = Recipe::create($validatedData);
-
-        foreach ($request->ingredients as $ingredient) {
-            $recipeIngredient = new RecipeIngredient([
-                'ingredient_id' => $ingredient['ingredient']['id'],
-                'quantity' => $ingredient['quantity'],
-                'unit' => $ingredient['unit']
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'photo' => 'required|string',
+                'is_vegetarian' => 'required|boolean',
+                'ingredients' => 'required|array',
+                'steps' => 'required|array'
             ]);
-            $recipe->ingredients()->save($recipeIngredient);
-        }
 
-        foreach ($request->steps as $step) {
-            $recipeStep = new RecipeStep([
-                'description' => $step['description'],
-                'step_number' => $step['step_number']
+            $recipe = Recipe::create($validatedData);
+
+            foreach ($request->ingredients as $ingredientData) {
+              
+                $ingredient = Ingredient::firstOrCreate(
+                    ['name' => $ingredientData['ingredient']['name']],
+                );
+
+                $recipeIngredient = new RecipeIngredient([
+                    'ingredient_id' => $ingredient->id,
+                    'quantity' => $ingredientData['quantity'],
+                    'unit' => $ingredientData['unit']
+                ]);
+                $recipe->ingredients()->save($recipeIngredient);
+            }
+
+            foreach ($request->steps as $key => $step) {
+                $recipeStep = new RecipeStep([
+                    'description' => $step['description'],
+                    'step_number' => $key + 1
+                ]);
+                $recipe->steps()->save($recipeStep);
+            }
+
+            Log::info('Recipe created successfully', ['recipe' => $recipe]);
+            return response()->json($recipe, 201);
+
+        } catch (ValidationException $e) {
+            Log::error('Validation failed for new recipe', [
+                'errors' => $e->errors(),
+                'request' => $request->all()
             ]);
-            $recipe->steps()->save($recipeStep);
+            return response()->json([
+                'message' => 'The given data was invalid.',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Error creating recipe', [
+                'message' => $e->getMessage(),
+                'request' => $request->all()
+            ]);
+            return response()->json([
+                'message' => 'An error occurred while creating the recipe.',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json($recipe, 201);
     }
 
     public function update(Request $request, $id)
     {
-        $recipe = Recipe::findOrFail($id);
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'photo' => 'required|string', // Changed from 'url' to 'string'
-            'is_vegetarian' => 'required|boolean',
-            'ingredients' => 'required|array',
-            'steps' => 'required|array'
-        ]);
+        Log::info('Incoming request data for updating recipe', ['id' => $id, 'data' => $request->all()]);
 
-        $recipe->update($validatedData);
-
-        // Update ingredients
-        $recipe->ingredients()->delete();
-        foreach ($request->ingredients as $ingredient) {
-            $recipeIngredient = new RecipeIngredient([
-                'ingredient_id' => $ingredient['ingredient']['id'],
-                'quantity' => $ingredient['quantity'],
-                'unit' => $ingredient['unit']
+        try {
+            $recipe = Recipe::findOrFail($id);
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'photo' => 'required|string',
+                'is_vegetarian' => 'required|boolean',
+                'ingredients' => 'required|array',
+                'steps' => 'required|array'
             ]);
-            $recipe->ingredients()->save($recipeIngredient);
-        }
 
-        // Update steps
-        $recipe->steps()->delete();
-        foreach ($request->steps as $step) {
-            $recipeStep = new RecipeStep([
-                'description' => $step['description'],
-                'step_number' => $step['step_number']
+            $recipe->update($validatedData);
+
+            // Update ingredients
+            $recipe->ingredients()->delete();
+            foreach ($request->ingredients as $ingredientData) {
+                // First, find or create the Ingredient
+                $ingredient = Ingredient::firstOrCreate(
+                    ['name' => $ingredientData['ingredient']['name']],
+                    ['name' => $ingredientData['ingredient']['name']] // You can add more fields here if needed
+                );
+
+                // Now create the RecipeIngredient with the Ingredient id
+                $recipeIngredient = new RecipeIngredient([
+                    'ingredient_id' => $ingredient->id,
+                    'quantity' => $ingredientData['quantity'],
+                    'unit' => $ingredientData['unit']
+                ]);
+                $recipe->ingredients()->save($recipeIngredient);
+            }
+
+            // Update steps
+            $recipe->steps()->delete();
+            foreach ($request->steps as $step) {
+                $recipeStep = new RecipeStep([
+                    'description' => $step['description'],
+                    'step_number' => $step['step_number']
+                ]);
+                $recipe->steps()->save($recipeStep);
+            }
+
+            Log::info('Recipe updated successfully', ['recipe' => $recipe]);
+            return response()->json($recipe, 200);
+
+        } catch (ValidationException $e) {
+            Log::error('Validation failed for updating recipe', [
+                'id' => $id,
+                'errors' => $e->errors(),
+                'request' => $request->all()
             ]);
-            $recipe->steps()->save($recipeStep);
+            return response()->json([
+                'message' => 'The given data was invalid.',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Error updating recipe', [
+                'id' => $id,
+                'message' => $e->getMessage(),
+                'request' => $request->all()
+            ]);
+            return response()->json([
+                'message' => 'An error occurred while updating the recipe.',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json($recipe, 200);
     }
 
     public function destroy($id)
     {
-        $recipe = Recipe::findOrFail($id);
-        $recipe->ingredients()->delete();
-        $recipe->steps()->delete();
-        $recipe->delete();
-        return response()->json(null, 204);
+        try {
+            $recipe = Recipe::findOrFail($id);
+            $recipe->ingredients()->delete();
+            $recipe->steps()->delete();
+            $recipe->delete();
+            Log::info('Recipe deleted successfully', ['id' => $id]);
+            return response()->json(null, 204);
+        } catch (\Exception $e) {
+            Log::error('Error deleting recipe', [
+                'id' => $id,
+                'message' => $e->getMessage()
+            ]);
+            return response()->json([
+                'message' => 'An error occurred while deleting the recipe.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
