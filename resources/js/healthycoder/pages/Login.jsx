@@ -1,100 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Sidebar from '../components/Sidebar';
-import QuoteBar from '../components/QuoteBar';
-import '../../../css/home.scss';
 
-const Home = () => {
-  const [activities, setActivities] = useState([]);
-  const [filteredActivities, setFilteredActivities] = useState([]);
-  const [selectedZone, setSelectedZone] = useState(null);
-  const [counter, setCounter] = useState(0); // Counter state
+export default function Login(props) {
+    const [values, setValues] = useState({
+        email: '',
+        password: ''
+    });
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchActivities = async () => {
-      try {
-        const response = await axios.get('/api/activities');
-        setActivities(response.data);
-      } catch (error) {
-        console.error('Error fetching activities:', error);
-      }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+
+        try {
+            // Make the AJAX request using axios
+            const response = await axios.post('/login', values);
+
+            // If login is successful, redirect to home page
+            if (response.status === 200) {
+                
+                navigate('/');
+            }
+        } catch (error) {
+            if (error.response) {
+                switch (error.response.status) {
+                    case 422:
+                        // Handle validation errors here
+                        console.log('VALIDATION FAILED:', error.response.data.errors);
+                        break;
+                    default:
+                        console.log('UNKNOWN ERROR', error.response.data);
+                        break;
+                }
+            } else {
+                console.log('ERROR', error.message);
+            }
+        }
     };
-    fetchActivities();
-  }, []);
 
-  useEffect(() => {
-    // Start the counter
-    const startTime = Date.now();
-    const interval = setInterval(() => {
-      setCounter((prevCounter) => prevCounter + 1);
-    }, 1000); // Update counter every second
-
-    // Reset the counter at midnight
-    const resetTime = () => {
-      const now = new Date();
-      const nextMidnight = new Date();
-      nextMidnight.setHours(24, 0, 0, 0); // Set to midnight
-      return nextMidnight - now;
+    const handleChange = (event) => {
+        setValues(previous_values => ({
+            ...previous_values, [event.target.name]: event.target.value
+        }));
     };
 
-    const timeout = setTimeout(() => {
-      setCounter(0); // Reset counter
-    }, resetTime());
-
-    return () => {
-      clearInterval(interval); // Cleanup interval
-      clearTimeout(timeout); // Cleanup timeout
-    };
-  }, []);
-
-  const handleActivitySelect = (filtered, zone) => {
-    setFilteredActivities(filtered);
-    setSelectedZone(zone);
-  };
-
-  return (
-    <div className="container-fluid p-0">
-      <Sidebar onActivitySelect={handleActivitySelect} />
-      <div className="content">
-        <div className="welcome-message">
-          <h1>Welcome to the Healthy Coder App</h1>
-        </div>
-        <div className="fixed-content">
-          <div className="counter">
-            Time spent on the app today: {Math.floor(counter / 60)} minutes {counter % 60} seconds
-          </div>
-          <QuoteBar />
-        </div>
-        <div className="main-content">
-          {selectedZone && (
-            <div>
-              <h2>{selectedZone} Activities</h2>
-              <ul>
-                {filteredActivities.map(activity => (
-                  <li key={activity.id}>{activity.name}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <div className="card-container">
-            {(selectedZone ? filteredActivities : activities).map((activity) => (
-              <div key={activity.id} className="card">
-                <img 
-                  src={`/${activity.image}`} 
-                  className="card-img-top" 
-                  alt={activity.name}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{activity.name}</h5>
-                  <p className="card-text">{activity.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Home;
+    return (
+        <form action="/login" method="post" onSubmit={handleSubmit}>
+            <input type="email" name="email" value={values.email} onChange={handleChange} />
+            <input type="password" name="password" value={values.password} onChange={handleChange} />
+            <button>Login</button>
+        </form>
+    );
+}
