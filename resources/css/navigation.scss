@@ -3,75 +3,88 @@
   position: fixed;
   top: 0;
   width: 100%;
-  height: 80px; /* Increased height */
+  height: 80px; /* Adjusted height */
   z-index: 1000;
   display: flex;
   align-items: center;
+  padding: 0 15px; /* Adjust padding */
+  justify-content: center; /* Center content horizontally */
 }
 
-body {
-  padding-top: 80px; /* Adjust based on your navbar height */
+.container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between items */
+  height: 100%;
+}
+
+.navbar-header {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .search-container {
   margin-left: auto;
-  margin-right: 20px; /* Center align with other items */
-  position: relative; /* Add this for positioning search results */
+  display: flex;
+  align-items: center;
+  height: 100%;
+  position: absolute; /* Change position to absolute */
+  top: 0; /* Align to the top */
+  right: 20px; /* Adjust position as needed */
 }
 
 .custom-search {
-  width: 300px; /* Increase the search bar length */
+  width: 300px;
+  height: 40px;
   border-radius: 20px 0 0 20px !important;
   border: 1px solid #ced4da !important;
   transition: all 0.3s ease !important;
-
-  &:focus {
-    box-shadow: none !important;
-    border-color: #80bdff !important;
-  }
-
-  &:hover {
-    border-color: #80bdff !important;
-  }
 }
 
 .search-button {
+  height: 40px;
   border-radius: 0 20px 20px 0 !important;
   border: 1px solid #ced4da !important;
   background-color: white !important;
   color: #6c757d !important;
   transition: all 0.3s ease !important;
+}
 
-  &:hover {
-    background-color: #f8f9fa !important;
-    color: #495057 !important;
+/* Ensure items align to the right */
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
+@media (max-width: 992px) { /* Adjust the breakpoint as needed */
+  .navbar-collapse {
+    position: absolute;
+    top: 80px; /* Aligns the collapse below the navbar */
+    right: 0;
+    background-color: var(--pastel-yellow); /* Ensure background color matches */
+    width: 100%; /* Full width */
+    z-index: 999;
   }
-}
 
-.search-results {
-  position: absolute;
-  top: 100%; /* Align just below the search container */
-  left: 0;
-  right: 0;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  max-height: 300px;
-  overflow-y: auto;
-  z-index: 1000; /* Ensure it stays on top */
-}
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+    text-align: right; /* Align text to the right */
+  }
 
-.search-results ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.search-results li {
-  padding: 8px 16px;
-  border-bottom: 1px solid #eee;
-}
-
-.search-results li:hover {
-  background-color: #f8f8f8;
+  .nav-item {
+    width: 100%;
+  }
 }

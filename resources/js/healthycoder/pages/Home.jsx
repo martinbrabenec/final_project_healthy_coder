@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import QuoteBar from '../components/QuoteBar';
 import '../../../css/home.scss';
@@ -13,8 +12,9 @@ const Home = () => {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const response = await axios.get('/api/activities');
-        setActivities(response.data);
+        const response = await fetch('/api/activities');
+        const data = await response.json();
+        setActivities(data);
       } catch (error) {
         console.error('Error fetching activities:', error);
       }
