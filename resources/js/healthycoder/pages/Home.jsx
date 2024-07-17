@@ -1,3 +1,4 @@
+// Home.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QuotesComponent from '../components/QuotesComponent';
@@ -69,24 +70,16 @@ const Home = () => {
         <h1>VibrantCoding: Energize Your Life, Elevate Your Code</h1>
       </div>
       <div className="boxes-section">
-        <div className="quote-section common-box">
+        <div className="common-box quote-box">
           <QuotesComponent />
         </div>
-        <div className="timer-section common-box">
+        <div className={`common-box timer-box ${elapsedTime < 28800000 ? 'go' : 'stop'}`}>
           <h2>Time Elapsed</h2>
           <div className="timer-content">
             <p className="timer-text">{formatTime(elapsedTime)}</p>
-            {elapsedTime < 28800000 ? (
-              <svg className="go-symbol" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
-                <circle cx="50" cy="50" r="40" fill="green" />
-                <text x="50" y="55" textAnchor="middle" fill="white" fontSize="24">GO</text>
-              </svg>
-            ) : (
-              <svg className="stop-symbol" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
-                <circle cx="50" cy="50" r="40" fill="red" />
-                <path d="M30 30h40v40H30z" fill="white" />
-              </svg>
-            )}
+            <div className="timer-indicator">
+              {elapsedTime < 28800000 ? 'Keep Going!' : 'Take a Break!'}
+            </div>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+// QuotesComponent.jsx
 import React, { useEffect, useState } from 'react';
 import '../../../css/quotescomponent.scss';
 
@@ -25,8 +26,6 @@ const QuotesComponent = () => {
   const selectRandomQuote = (quotesArray) => {
     const randomQuote = quotesArray[Math.floor(Math.random() * quotesArray.length)];
     setQuote(randomQuote.text);
-
-    // Extract the author's name and remove ", type.fit" if present
     let authorName = randomQuote.author ? randomQuote.author.split(',')[0] : 'Unknown';
     setAuthor(authorName);
   };
@@ -44,11 +43,13 @@ const QuotesComponent = () => {
   }
 
   return (
-    <div className="quote-container">
-      <h1>Random Quote</h1>
+    <div className="quote-content">
+      <h2>Random Quote</h2>
       <p className="quote-text">"{quote}"</p>
       <p className="quote-author">- {author}</p>
-      <button className="quote-button" onClick={handleButtonClick}>Need wisdom? Tap for a quote.</button>
+      <div className="quote-indicator">
+        <button onClick={handleButtonClick}>New Quote</button>
+      </div>
     </div>
   );
 };
