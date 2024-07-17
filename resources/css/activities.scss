@@ -104,3 +104,8 @@
 .pagination button:hover {
   background-color: #ddd;
 }
+
+/* Greying out filtered activities */
+.filtered .card {
+  opacity: 0.5;
+}

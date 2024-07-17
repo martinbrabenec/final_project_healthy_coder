@@ -1,11 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import QuotesComponent from '../components/QuotesComponent';
 import '../../../css/home.scss';
 
 const Home = () => {
-  const handleButtonClick = (activity) => {
-    console.log(`Clicked: ${activity}`);
-    // Implement the click handling logic here
+  const navigate = useNavigate();
+
+  const handleButtonClick = (bodyZone) => {
+    navigate(`/activities?body_zone=${encodeURIComponent(bodyZone)}`);
   };
 
   return (

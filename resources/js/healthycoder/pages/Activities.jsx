@@ -1,26 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import '../../../css/activities.scss';
 import HeartIcon from '../components/HeartIcon';
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 function Activities() {
   const [activities, setActivities] = useState([]);
   const [likedActivities, setLikedActivities] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [activitiesPerPage] = useState(8);
+  const query = useQuery();
+  const bodyZone = query.get('body_zone');
 
   useEffect(() => {
     axios.get('/api/activities')
       .then(response => {
-        setActivities(response.data);
+        const allActivities = response.data;
+        const reorderedActivities = bodyZone 
+          ? allActivities.sort((a, b) => (a.body_zone === bodyZone ? -1 : 1))
+          : allActivities;
+        setActivities(reorderedActivities);
         const savedLikes = JSON.parse(localStorage.getItem('likedActivities')) || {};
         setLikedActivities(savedLikes);
       })
       .catch(error => {
         console.error('Error fetching activities:', error);
       });
-  }, []);
+  }, [bodyZone]);
 
   const toggleLike = (activityId) => {
     setLikedActivities(prevLiked => {
@@ -47,11 +57,12 @@ function Activities() {
     <div className="container">
       <div className="row">
         {currentActivities.map(activity => {
+          const isFiltered = bodyZone && activity.body_zone !== bodyZone;
           const imageUrl = `/assets/activities/${activity.image.split('/').pop()}`;
           const googleSearchUrl = `https://www.google.com/search?q=tell me more about ${activity.name}. how it can improve my health and how can i get started?`;
 
           return (
-            <div className="col-md-3 col-sm-6 mb-4" key={activity.id}>
+            <div className={`col-md-3 col-sm-6 mb-4 ${isFiltered ? 'filtered' : ''}`} key={activity.id}>
               <div className="card h-100">
                 <div className="image-container">
                   <img src={imageUrl} alt={activity.name} className="card-img-top activity-image" />
