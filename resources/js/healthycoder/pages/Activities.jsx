@@ -41,7 +41,7 @@ function Activities() {
       <div className="row">
         {activities.map(activity => {
           const imageUrl = `/assets/activities/${activity.image.split('/').pop()}`;
-          console.log(`Image URL: ${imageUrl}`);
+          const googleSearchUrl = `https://www.google.com/search?q=tell me more about ${activity.name}. how it can improve my health and how can i get started?`;
 
           return (
             <div className="col-md-3 col-sm-6 mb-4" key={activity.id}>
@@ -49,7 +49,7 @@ function Activities() {
                 <div className="image-container">
                   <img src={imageUrl} alt={activity.name} className="card-img-top activity-image" />
                   <div className="overlay">
-                    <Link to={`/activities/${activity.id}`} className="activity-name">{activity.name}</Link>
+                    <a href={googleSearchUrl} target="_blank" rel="noopener noreferrer" className="activity-name">{activity.name}</a>
                   </div>
                 </div>
                 <div className="card-body d-flex justify-content-between align-items-center">
