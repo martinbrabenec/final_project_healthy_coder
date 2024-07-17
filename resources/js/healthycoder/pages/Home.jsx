@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const response = await axios.get('http://www.thehealthycoder.test/api/activities');
+        const response = await axios.get('/api/activities');
         setActivities(response.data);
       } catch (error) {
         console.error('Error fetching activities:', error);
@@ -56,12 +56,18 @@ const Home = () => {
     <div className="container-fluid p-0">
       <Sidebar onActivitySelect={handleActivitySelect} />
       <div className="content">
-        <QuoteBar />
-        <div className="main-content">
-          <h1 className="mb-4 text-center">Welcome to the Healthy Coder App</h1>
-          <div className="counter mb-4 text-center">
+        <div className="welcome-message">
+          Welcome to the Healthy Coder App
+        </div>
+        <div className="fixed-content">
+          <div className="quote-container">
+            <QuoteBar />
+          </div>
+          <div className="counter">
             Time spent on the app today: {Math.floor(counter / 60)} minutes {counter % 60} seconds
           </div>
+        </div>
+        <div className="main-content">
           {selectedZone && (
             <div>
               <h2>{selectedZone} Activities</h2>

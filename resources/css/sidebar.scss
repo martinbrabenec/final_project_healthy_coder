@@ -1,11 +1,13 @@
 .sidebar {
-  width: 200px;
+  width: 210px;
   position: fixed;
-  top: 80px; // Adjust based on your navbar height
+  top: 150px; // Adjust based on your navbar height
   left: 0;
   bottom: 0;
   background-color: #f8f9fa;
-  padding: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   overflow-y: auto;
 }
 
