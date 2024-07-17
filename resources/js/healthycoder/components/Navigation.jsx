@@ -18,9 +18,6 @@ const Navigation = () => (
             <Link className="nav-link" to="/users">Users</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/alternative_activities">I'm feeling lucky</Link>
-          </li>
-          <li className="nav-item">
             <Link className="nav-link" to="/activities">Activities</Link>
           </li>
           <li className="nav-item">

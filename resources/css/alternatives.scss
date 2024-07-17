@@ -13,8 +13,9 @@
 .col-md-3 {
   flex: 0 0 25%;
   max-width: 25%;
-  padding: 10px;
+  padding: 0px 15px 10px 10px; 
 }
+// The values apply to the top, right, bottom, and left, respectivel
 
 .card-container {
   perspective: 1000px;
@@ -138,7 +139,7 @@
 }
 
 main.flex-grow-1.p-3 {
-  margin-top: 120px;
+  margin-top: 170px;
   flex-grow: 1;
-  padding: 1rem;
+  padding: 3rem;
 }
