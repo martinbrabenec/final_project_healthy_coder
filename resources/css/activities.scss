@@ -1,3 +1,18 @@
+.my-4 {
+  position: fixed;
+  top: 150px;
+  left: 10%; /* Centers the heading horizontally */
+  transform: translateX(-50%); /* Adjusts for the 50% centering */
+  z-index: 1000; /* Ensures it stays on top of other elements */
+  background-color: white; /* Optional: To avoid overlap with background */
+  padding: 10px; /* Optional: Add some padding for better visibility */
+  border-radius: 5px; /* Optional: Add border radius for aesthetics */
+}
+
+.container {
+  margin-top: 200px; /* Adjust based on the fixed heading height */
+}
+
 .image-container {
   position: relative;
   overflow: hidden;
@@ -58,4 +73,34 @@
 
 .like-button-container:hover {
   background-color: rgba(255, 255, 255, 0.9);
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 15px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination button:hover {
+  background-color: #ddd;
 }

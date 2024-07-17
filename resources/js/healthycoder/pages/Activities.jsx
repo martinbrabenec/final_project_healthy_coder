@@ -7,12 +7,13 @@ import HeartIcon from '../components/HeartIcon';
 function Activities() {
   const [activities, setActivities] = useState([]);
   const [likedActivities, setLikedActivities] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activitiesPerPage] = useState(8);
 
   useEffect(() => {
     axios.get('/api/activities')
       .then(response => {
         setActivities(response.data);
-        // Initialize liked state from localStorage or an empty object
         const savedLikes = JSON.parse(localStorage.getItem('likedActivities')) || {};
         setLikedActivities(savedLikes);
       })
@@ -29,17 +30,24 @@ function Activities() {
       } else {
         newLiked[activityId] = true;
       }
-      // Save to localStorage
       localStorage.setItem('likedActivities', JSON.stringify(newLiked));
       return newLiked;
     });
   };
 
+  // Pagination logic
+  const indexOfLastActivity = currentPage * activitiesPerPage;
+  const indexOfFirstActivity = indexOfLastActivity - activitiesPerPage;
+  const currentActivities = activities.slice(indexOfFirstActivity, indexOfLastActivity);
+  const pageCount = Math.ceil(activities.length / activitiesPerPage);
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
   return (
     <div className="container">
       <h2 className="my-4">All Activities</h2>
       <div className="row">
-        {activities.map(activity => {
+        {currentActivities.map(activity => {
           const imageUrl = `/assets/activities/${activity.image.split('/').pop()}`;
           const googleSearchUrl = `https://www.google.com/search?q=tell me more about ${activity.name}. how it can improve my health and how can i get started?`;
 
@@ -71,6 +79,21 @@ function Activities() {
             </div>
           );
         })}
+      </div>
+      <div className="pagination-container">
+        {pageCount > 1 && (
+          <div className="pagination">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button 
+                key={i} 
+                onClick={() => paginate(i + 1)} 
+                className={currentPage === i + 1 ? 'active' : ''}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
