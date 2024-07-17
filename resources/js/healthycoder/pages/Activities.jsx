@@ -54,7 +54,7 @@ function Activities() {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
-    <div className="container">
+    <div className="container activities-container">
       <div className="row">
         {currentActivities.map(activity => {
           const isFiltered = bodyZone && activity.body_zone !== bodyZone;

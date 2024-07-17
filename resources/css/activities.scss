@@ -9,6 +9,11 @@
   border-radius: 5px; /* Optional: Add border radius for aesthetics */
 }
 
+/* New class specifically for the activities container */
+.activities-container {
+  margin-top: 100px; /* Adjust based on the fixed header height */
+}
+
 .container {
   margin-top: 200px; /* Adjust based on the fixed heading height */
 }
