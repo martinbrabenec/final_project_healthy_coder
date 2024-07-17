@@ -95,40 +95,74 @@
   background-color: #f44336;
 }
 
-.quote-container {
-  text-align: center;
-  background-color: #fff;
-  padding: 30px; /* Adjusted padding */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin: 20px 0; /* Reduced margin */
+.activity-button.multicolored {
+  background: conic-gradient(
+    from 0deg,
+    red,
+    yellow,
+    green,
+    blue,
+    purple,
+    red
+  );
 }
 
-.quote-text {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15px; /* Adjusted margin */
+.activity-button .bullseye {
+  animation: spin 2s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.quote-author {
-  font-size: 20px;
-  color: #555;
-  margin-bottom: 15px; /* Adjusted margin */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.quote-button {
-  background-color: #ff9800;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.activity-button.transforming .bullseye {
+  animation: spin 2s linear infinite;
 }
 
-.quote-button:hover {
-  background-color: #e68a00;
+.activity-button .arrow {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.transformation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: transform-to-card 2s forwards;
+}
+
+@keyframes transform-to-card {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.transformation img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }

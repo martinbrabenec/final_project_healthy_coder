@@ -15,7 +15,6 @@
   max-width: 25%;
   padding: 0px 15px 10px 10px; 
 }
-// The values apply to the top, right, bottom, and left, respectivel
 
 .card-container {
   perspective: 1000px;
@@ -142,4 +141,20 @@ main.flex-grow-1.p-3 {
   margin-top: 170px;
   flex-grow: 1;
   padding: 3rem;
+}
+
+.pulsate {
+  animation: pulsate 1.5s infinite;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
