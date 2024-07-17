@@ -39,7 +39,6 @@ function Alternatives() {
 
   return (
     <div className="container">
-      <h2 className="my-4">Alternative Activities</h2>
       <div className="row">
         {currentItems.map(activity => {
           const imagePath = `/assets/alternative_activities/${activity.link_to_photo}`;

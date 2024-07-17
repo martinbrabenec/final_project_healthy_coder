@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QuotesComponent from '../components/QuotesComponent';
 import axios from 'axios';
@@ -8,6 +8,31 @@ const Home = () => {
   const navigate = useNavigate();
   const [randomAlternative, setRandomAlternative] = useState(null);
   const [isTransforming, setIsTransforming] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  useEffect(() => {
+    const storedTime = localStorage.getItem('elapsedTime');
+    const startTime = storedTime ? parseInt(storedTime, 10) : Date.now();
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const timeElapsed = now - startTime;
+      setElapsedTime(timeElapsed);
+      localStorage.setItem('elapsedTime', startTime.toString());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const now = new Date();
+    const timeUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
+    const timeout = setTimeout(() => {
+      localStorage.removeItem('elapsedTime');
+      setElapsedTime(0);
+    }, timeUntilMidnight);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleButtonClick = (bodyZone) => {
     navigate(`/activities?body_zone=${encodeURIComponent(bodyZone)}`);
@@ -22,7 +47,7 @@ const Home = () => {
         setTimeout(() => {
           setIsTransforming(false);
           navigate(`/alternatives`, { state: { selectedActivity: randomActivity } });
-        }, 2000); // Duration of the transformation animation
+        }, 2000);
       })
       .catch(error => {
         console.error('Error fetching alternative activities:', error);
@@ -30,13 +55,42 @@ const Home = () => {
       });
   };
 
+  const formatTime = (milliseconds) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
   return (
-    <div className="home-container">
+    <div className="home-content">
       <div className="title-section">
         <h1>VibrantCoding: Energize Your Life, Elevate Your Code</h1>
       </div>
-      <QuotesComponent />
-      <div className="buttons-container">
+      <div className="boxes-section">
+        <div className="quote-section common-box">
+          <QuotesComponent />
+        </div>
+        <div className="timer-section common-box">
+          <h2>Time Elapsed</h2>
+          <div className="timer-content">
+            <p className="timer-text">{formatTime(elapsedTime)}</p>
+            {elapsedTime < 28800000 ? (
+              <svg className="go-symbol" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
+                <circle cx="50" cy="50" r="40" fill="green" />
+                <text x="50" y="55" textAnchor="middle" fill="white" fontSize="24">GO</text>
+              </svg>
+            ) : (
+              <svg className="stop-symbol" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
+                <circle cx="50" cy="50" r="40" fill="red" />
+                <path d="M30 30h40v40H30z" fill="white" />
+              </svg>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="buttons-section">
         <button className="activity-button green" onClick={() => handleButtonClick('Hand & Wrist')}>
           <span className="activity-label">Hand & Wrist</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -89,7 +143,7 @@ const Home = () => {
             </svg>
             {isTransforming && (
               <svg className="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M2 12l20 0" stroke="black" strokeWidth="2" />
+                <path d="M2 12h20" stroke="black" strokeWidth="2" />
                 <path d="M14 6l8 6-8 6" fill="none" stroke="black" strokeWidth="2" />
               </svg>
             )}
