@@ -3,6 +3,11 @@ import QuotesComponent from '../components/QuotesComponent';
 import '../../../css/home.scss';
 
 const Home = () => {
+  const handleButtonClick = (activity) => {
+    console.log(`Clicked: ${activity}`);
+    // Implement the click handling logic here
+  };
+
   return (
     <div className="home-container">
       <div className="title-section">
@@ -10,53 +15,53 @@ const Home = () => {
       </div>
       <QuotesComponent />
       <div className="buttons-container">
-        <button className="activity-button green">
+        <button className="activity-button green" onClick={() => handleButtonClick('Hand & Wrist')}>
+          <span className="activity-label">Hand & Wrist</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="10" fill="white"/>
+            <circle cx="12" cy="12" r="4" fill="green"/>
           </svg>
         </button>
-        <button className="activity-button green-yellow">
+        <button className="activity-button green-yellow" onClick={() => handleButtonClick('Neck & Upper Body')}>
+          <span className="activity-label">Neck & Upper Body</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="10" fill="white"/>
+            <circle cx="12" cy="12" r="4" fill="#8bc34a"/>
           </svg>
         </button>
-        <button className="activity-button yellow">
+        <button className="activity-button yellow" onClick={() => handleButtonClick('Posture & Sitting')}>
+          <span className="activity-label">Posture & Sitting</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="10" fill="white"/>
+            <circle cx="12" cy="12" r="4" fill="#ffeb3b"/>
           </svg>
         </button>
-        <button className="activity-button yellow-orange">
+        <button className="activity-button yellow-orange" onClick={() => handleButtonClick('Head & Eyes')}>
+          <span className="activity-label">Head & Eyes</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="10" fill="white"/>
+            <circle cx="12" cy="12" r="4" fill="#ffc107"/>
           </svg>
         </button>
-        <button className="activity-button orange">
+        <button className="activity-button orange" onClick={() => handleButtonClick('Lower Body')}>
+          <span className="activity-label">Lower Body</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="10" fill="white"/>
+            <circle cx="12" cy="12" r="4" fill="#ff9800"/>
           </svg>
         </button>
-        <button className="activity-button orange-red">
+        <button className="activity-button orange-red" onClick={() => handleButtonClick('General')}>
+          <span className="activity-label">General</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="10" fill="white"/>
+            <circle cx="12" cy="12" r="4" fill="#ff5722"/>
           </svg>
         </button>
-        <button className="activity-button red">
+        <button className="activity-button red" onClick={() => handleButtonClick("I'm feeling lucky")}>
+          <span className="activity-label">I'm feeling lucky</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="10" fill="white"/>
+            <circle cx="12" cy="12" r="4" fill="#f44336"/>
           </svg>
         </button>
       </div>
