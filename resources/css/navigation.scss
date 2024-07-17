@@ -24,6 +24,10 @@
   transform: translateX(-50%);
 }
 
+.navbar-brand {
+  font-size: 24px; /* Adjust the font size for Healthy Coder App */
+}
+
 .navbar-nav {
   display: flex;
   align-items: center;
@@ -34,6 +38,16 @@
   display: flex;
   align-items: center;
   height: 100%;
+}
+
+.nav-link {
+  font-size: 18px; /* Adjust the font size for navbar items */
+  padding: 15px 10px; /* Adjust padding for better spacing */
+}
+
+.nav-link.active {
+  border-bottom: 3px solid #007bff; /* Add border to active item */
+  color: #007bff !important;
 }
 
 .search-container {
