@@ -64,7 +64,6 @@ function Recipes() {
   const handleSave = () => {
     const request = newRecipe ? axios.post : axios.put;
     const url = newRecipe ? '/api/recipes/create' : `/api/recipes/${selectedRecipe.id}`;
-    console.log(selectedRecipe)
     request(url, selectedRecipe)
       .then(() => {
         fetchRecipes();
@@ -107,7 +106,7 @@ function Recipes() {
     const value = e.target.value;
     if (type === 'ingredient') {
       const ingredients = [...selectedRecipe.ingredients];
-      if (field == 'name') {
+      if (field === 'name') {
         ingredients[index]['ingredient'][field] = value;
       } else {
         ingredients[index][field] = value;
@@ -118,7 +117,7 @@ function Recipes() {
       steps[index][field] = value;
       setSelectedRecipe({ ...selectedRecipe, steps });
     } else if (type === 'checkbox') {
-        setSelectedRecipe({ ...selectedRecipe, is_vegetarian: e.target.checked ? true : false });
+      setSelectedRecipe({ ...selectedRecipe, is_vegetarian: e.target.checked ? true : false });
     } else {
       setSelectedRecipe({ ...selectedRecipe, [field]: value });
     }
@@ -127,7 +126,7 @@ function Recipes() {
   return (
     <div className="container">
       <h2 className="my-4">All Recipes</h2>
-      <button onClick={() => { setNewRecipe(true); setSelectedRecipe({ name: '', photo: '', is_vegetarian: false, ingredients: [], steps: [] }); setModalIsOpen(true); }}>New Recipe</button>
+      <button className="new-recipe-button" onClick={() => { setNewRecipe(true); setSelectedRecipe({ name: '', photo: '', is_vegetarian: false, ingredients: [], steps: [] }); setModalIsOpen(true); }}>New Recipe</button>
       <div className="row">
         {recipes.map(recipe => {
           const imageUrl = `/assets/food images/${recipe.photo}`;
@@ -155,8 +154,10 @@ function Recipes() {
                       </div>
                     ) : null}
                   </div>
-                  <button onClick={() => { openModal(recipe.id); handleEdit(); }}>Edit</button>
-                  <button onClick={() => handleDelete(recipe.id)}>Delete</button>
+                  <div className="card-buttons">
+                    <button onClick={() => { openModal(recipe.id); handleEdit(); }}>Edit</button>
+                    <button onClick={() => handleDelete(recipe.id)}>Delete</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,10 +193,7 @@ function Recipes() {
                     {errors[`ingredients.${index}.quantity`] && <span className="error">{errors[`ingredients.${index}.quantity`][0]}</span>}
                     <input type="text" value={ingredient.unit} onChange={(e) => handleChange(e, 'unit', index, 'ingredient')} placeholder="Unit" />
                     {errors[`ingredients.${index}.unit`] && <span className="error">{errors[`ingredients.${index}.unit`][0]}</span>}
-                    
-                    <input type="text" value={ingredient.ingredient.name} onChange={(e) => {
-                      handleChange(e, 'name', index, 'ingredient')
-                      }} placeholder="Ingredient" />
+                    <input type="text" value={ingredient.ingredient.name} onChange={(e) => handleChange(e, 'name', index, 'ingredient')} placeholder="Ingredient" />
                     {errors[`ingredients.${index}.name`] && <span className="error">{errors[`ingredients.${index}.name`][0]}</span>}
                     <button onClick={() => handleRemoveIngredient(index)}>-</button>
                   </div>

@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const API_BASE_URL = 'http://www.thehealthycoder.test/api';
-
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/recipes`)
+    axios.get('/api/recipes')
       .then(response => {
         setRecipes(response.data);
       })

@@ -26,7 +26,7 @@ const TestPostAPI = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://www.thehealthycoder.test/api/activities/create', newActivity);
+      const response = await axios.post('/api/activities/create', newActivity);
       console.log('Activity created:', response.data);
       alert('Activity created successfully!');
       

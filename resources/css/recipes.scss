@@ -102,6 +102,23 @@
   opacity: 1;
 }
 
+// Adjust the new recipe button margin
+button.new-recipe-button {
+  margin-bottom: 20px; /* Add white space below the button */
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+}
+
+.card-buttons button {
+  margin-right: 10px; /* Add space between the buttons */
+}
+
 // Modal styles
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.75);

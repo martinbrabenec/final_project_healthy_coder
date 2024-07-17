@@ -100,27 +100,27 @@
   list-style: none;
   padding: 0;
   gap: 0.5rem;
+}
 
-  button {
-    padding: 0.5rem 1rem;
-    background-color: transparent;
-    color: #333;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
+.pagination button {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
 
-    &:hover {
-      background-color: #f0f0f0;
-      border: 1px solid #ddd;
-    }
+.pagination button:hover {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+}
 
-    &.active {
-      background-color: #007bff;
-      color: white;
-    }
-  }
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
 }
 
 @media (max-width: 768px) {
@@ -135,4 +135,10 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
+}
+
+main.flex-grow-1.p-3 {
+  margin-top: 120px;
+  flex-grow: 1;
+  padding: 1rem;
 }

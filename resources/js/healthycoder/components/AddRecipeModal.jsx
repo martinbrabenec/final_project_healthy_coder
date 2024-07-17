@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-const API_BASE_URL = 'http://www.thehealthycoder.test/api';
-
 function AddRecipeModal({ show, onClose, onAdd }) {
   const [newRecipe, setNewRecipe] = useState({ name: '', photo: '' });
   const [errors, setErrors] = useState({});
