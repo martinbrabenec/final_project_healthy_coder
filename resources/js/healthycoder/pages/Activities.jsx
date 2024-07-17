@@ -45,7 +45,6 @@ function Activities() {
 
   return (
     <div className="container">
-      <h2 className="my-4">All Activities</h2>
       <div className="row">
         {currentActivities.map(activity => {
           const imageUrl = `/assets/activities/${activity.image.split('/').pop()}`;

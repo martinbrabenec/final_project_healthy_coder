@@ -17,7 +17,6 @@ function RecipeList() {
 
   return (
     <div>
-      <h2>All Recipes</h2>
       <ul>
         {recipes.map(recipe => (
           <li key={recipe.id}>

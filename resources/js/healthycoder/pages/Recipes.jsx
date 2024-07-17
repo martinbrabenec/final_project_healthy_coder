@@ -125,7 +125,7 @@ function Recipes() {
 
   return (
     <div className="container">
-      <h2 className="my-4">All Recipes</h2>
+    
       <button className="new-recipe-button" onClick={() => { setNewRecipe(true); setSelectedRecipe({ name: '', photo: '', is_vegetarian: false, ingredients: [], steps: [] }); setModalIsOpen(true); }}>New Recipe</button>
       <div className="row">
         {recipes.map(recipe => {
