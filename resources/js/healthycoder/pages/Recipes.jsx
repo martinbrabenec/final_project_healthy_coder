@@ -5,6 +5,20 @@ import '../../../css/recipes.scss';
 
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
+const EditIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92 2.92h-1.59v-1.59l11.06-11.06 1.59 1.59L5.92 20.17zM20.71 7.04a1.44 1.44 0 0 0 0-2.04l-2.34-2.34a1.44 1.44 0 0 0-2.04 0l-1.29 1.29 3.75 3.75 1.29-1.29z"/>
+  </svg>
+);
+
+const DeleteIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="delete">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-4.5l-1-1zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9H6v10z"/>
+  </svg>
+);
+
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -146,7 +160,6 @@ function Recipes() {
 
   return (
     <div className="container">
-      <button className="new-recipe-button" onClick={() => { setNewRecipe(true); setSelectedRecipe({ name: '', photo: '', is_vegetarian: false, ingredients: [], steps: [] }); setModalIsOpen(true); }}>New Recipe</button>
       <div className="row">
         {currentRecipes.map(recipe => {
           const imageUrl = `/assets/food images/${recipe.photo}`;
@@ -175,8 +188,8 @@ function Recipes() {
                     ) : null}
                   </div>
                   <div className="card-buttons">
-                    <button onClick={() => { openModal(recipe.id); handleEdit(); }}>Edit</button>
-                    <button onClick={() => handleDelete(recipe.id)}>Delete</button>
+                    <div onClick={() => { openModal(recipe.id); handleEdit(); }}><EditIcon /></div>
+                    <div onClick={() => handleDelete(recipe.id)}><DeleteIcon /></div>
                   </div>
                 </div>
               </div>
@@ -195,8 +208,9 @@ function Recipes() {
             {index + 1}
           </span>
         ))}
+        <button className="new-recipe-button" onClick={() => { setNewRecipe(true); setSelectedRecipe({ name: '', photo: '', is_vegetarian: false, ingredients: [], steps: [] }); setModalIsOpen(true); }}>New Recipe</button>
       </div>
-      
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -206,7 +220,10 @@ function Recipes() {
       >
         {selectedRecipe && (
           <div>
-            <h2>{editMode || newRecipe ? 'Edit Recipe' : selectedRecipe.name}</h2>
+            <div className="modal-header">
+              <h2>{editMode || newRecipe ? 'Edit Recipe' : selectedRecipe.name}</h2>
+              <button onClick={closeModal}>&times;</button>
+            </div>
             {editMode || newRecipe ? (
               <>
                 <input type="text" value={selectedRecipe.name} onChange={(e) => handleChange(e, 'name')} placeholder="Recipe Name" />
@@ -220,27 +237,30 @@ function Recipes() {
                 {errors.is_vegetarian && <span className="error">{errors.is_vegetarian[0]}</span>}
                 <h3>Ingredients</h3>
                 {selectedRecipe.ingredients.map((ingredient, index) => (
-                  <div key={index}>
+                  <div key={index} className="input-group">
                     <input type="text" value={ingredient.quantity} onChange={(e) => handleChange(e, 'quantity', index, 'ingredient')} placeholder="Quantity" />
                     {errors[`ingredients.${index}.quantity`] && <span className="error">{errors[`ingredients.${index}.quantity`][0]}</span>}
                     <input type="text" value={ingredient.unit} onChange={(e) => handleChange(e, 'unit', index, 'ingredient')} placeholder="Unit" />
                     {errors[`ingredients.${index}.unit`] && <span className="error">{errors[`ingredients.${index}.unit`][0]}</span>}
                     <input type="text" value={ingredient.ingredient.name} onChange={(e) => handleChange(e, 'name', index, 'ingredient')} placeholder="Ingredient" />
                     {errors[`ingredients.${index}.name`] && <span className="error">{errors[`ingredients.${index}.name`][0]}</span>}
-                    <button onClick={() => handleRemoveIngredient(index)}>-</button>
+                    <button className="remove-button" onClick={() => handleRemoveIngredient(index)}>-</button>
                   </div>
                 ))}
-                <button onClick={handleAddIngredient}>+</button>
+                <button className="add-button" onClick={handleAddIngredient}>+</button>
                 <h3>Steps</h3>
                 {selectedRecipe.steps.map((step, index) => (
-                  <div key={index}>
+                  <div key={index} className="input-group">
                     <textarea value={step.description} onChange={(e) => handleChange(e, 'description', index, 'step')} placeholder="Step Description"></textarea>
                     {errors[`steps.${index}.description`] && <span className="error">{errors[`steps.${index}.description`][0]}</span>}
-                    <button onClick={() => handleRemoveStep(index)}>-</button>
+                    <button className="remove-button" onClick={() => handleRemoveStep(index)}>-</button>
                   </div>
                 ))}
-                <button onClick={handleAddStep}>+</button>
-                <button onClick={handleSave}>Save</button>
+                <button className="add-button" onClick={handleAddStep}>+</button>
+                <div className="modal-buttons">
+                  <button onClick={handleSave}>Save</button>
+                  <button onClick={closeModal}>Close</button>
+                </div>
               </>
             ) : (
               <>
@@ -256,9 +276,9 @@ function Recipes() {
                     <li key={index}>{step.description}</li>
                   ))}
                 </ol>
+                <button onClick={closeModal}>Close</button>
               </>
             )}
-            <button onClick={closeModal}>Close</button>
           </div>
         )}
       </Modal>

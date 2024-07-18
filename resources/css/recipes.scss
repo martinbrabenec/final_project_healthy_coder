@@ -51,7 +51,7 @@
 .card-title {
   margin-bottom: 10px;
   font-size: 1.1rem;
-  cursor: pointer; /* Add cursor pointer for title */
+  cursor: pointer;
 }
 
 .vegetarian-icon-container {
@@ -80,8 +80,8 @@
   padding: 5px;
   position: absolute;
   z-index: 1;
-  bottom: 30px; /* Adjusted to lower the tooltip */
-  right: 20px;  /* Adjusted to move the tooltip to the left */
+  bottom: 30px;
+  right: 20px;
   opacity: 0;
   transition: opacity 0.3s, visibility 0.3s;
 }
@@ -104,7 +104,19 @@
 
 // Adjust the new recipe button margin
 button.new-recipe-button {
-  margin-bottom: 20px; /* Add white space below the button */
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+button.new-recipe-button:hover {
+  background-color: #218838;
 }
 
 .card-buttons {
@@ -115,23 +127,43 @@ button.new-recipe-button {
   left: 15px;
 }
 
-.card-buttons button {
+.card-buttons svg {
   margin-right: 10px; /* Add space between the buttons */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 24px;
+  height: 24px;
 }
 
-// Pagination button styles
+.card-buttons svg.delete {
+  background-color: #dc3545;
+}
+
+.card-buttons svg.delete:hover {
+  background-color: #c82333;
+}
+
+.card-buttons svg:hover {
+  background-color: #0056b3;
+}
+
 .pagination-buttons {
   display: flex;
   justify-content: center;
   margin-top: 0.2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 0.5rem;
 }
 
 .pagination-buttons button,
 .pagination-buttons span {
   background-color: #fff;
   color: #000;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
@@ -149,7 +181,6 @@ button.new-recipe-button {
   background-color: #e9e9e9;
 }
 
-// Modal styles
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.75);
   position: fixed;
@@ -166,25 +197,52 @@ button.new-recipe-button {
 .modal-content {
   background: white;
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 8px;
   width: 80%;
   max-width: 600px;
   max-height: 80vh; /* Ensure the modal does not exceed the viewport height */
   overflow-y: auto; /* Make the modal content scrollable */
   position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 button {
-  background-color: #555;
+  background-color: #007bff;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #333;
+  background-color: #0056b3;
+}
+
+button.remove-button {
+  background-color: #dc3545;
+}
+
+button.remove-button:hover {
+  background-color: #c82333;
 }
 
 input, textarea {
@@ -194,6 +252,16 @@ input, textarea {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.input-group input,
+.input-group textarea {
+  flex: 1;
 }
 
 // Responsive adjustments
