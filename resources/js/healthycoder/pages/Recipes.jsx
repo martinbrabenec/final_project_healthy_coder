@@ -178,7 +178,7 @@ function Recipes() {
                     {recipe.is_vegetarian ? (
                       <div className="vegetarian-icon-wrapper">
                         <img 
-                          src="/ASSETS/svgs/veg.svg" 
+                          src="/assets/svgs/veg.svg" 
                           alt="Vegetarian" 
                           className="vegetarian-icon" 
                           title="Suitable for Vegetarians"
