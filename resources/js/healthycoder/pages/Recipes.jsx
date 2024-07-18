@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import '../../../css/recipes.scss';
+import UserContext from '../context/UserContext';
 
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
@@ -28,6 +29,7 @@ function Recipes() {
   const [editMode, setEditMode] = useState(false);
   const [newRecipe, setNewRecipe] = useState(false);
   const [errors, setErrors] = useState({});
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     fetchRecipes();
@@ -188,8 +190,17 @@ function Recipes() {
                     ) : null}
                   </div>
                   <div className="card-buttons">
-                    <div onClick={() => { openModal(recipe.id); handleEdit(); }}><EditIcon /></div>
-                    <div onClick={() => handleDelete(recipe.id)}><DeleteIcon /></div>
+                    {
+                      user && user.role === 'admin' ?
+                      // btn here 
+                      <>
+
+                      <div onClick={() => { openModal(recipe.id); handleEdit(); }}><EditIcon /></div>
+                      <div onClick={() => handleDelete(recipe.id)}><DeleteIcon /></div>
+                      </>
+                      : ''
+                    }
+                   
                   </div>
                 </div>
               </div>
@@ -244,6 +255,8 @@ function Recipes() {
                     {errors[`ingredients.${index}.unit`] && <span className="error">{errors[`ingredients.${index}.unit`][0]}</span>}
                     <input type="text" value={ingredient.ingredient.name} onChange={(e) => handleChange(e, 'name', index, 'ingredient')} placeholder="Ingredient" />
                     {errors[`ingredients.${index}.name`] && <span className="error">{errors[`ingredients.${index}.name`][0]}</span>}
+              
+                    
                     <button className="remove-button" onClick={() => handleRemoveIngredient(index)}>-</button>
                   </div>
                 ))}
