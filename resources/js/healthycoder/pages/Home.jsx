@@ -1,4 +1,3 @@
-// Home.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QuotesComponent from '../components/QuotesComponent';
@@ -12,27 +11,37 @@ const Home = () => {
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
-    const storedTime = localStorage.getItem('elapsedTime');
-    const startTime = storedTime ? parseInt(storedTime, 10) : Date.now();
+    const getTodayString = () => {
+      const today = new Date();
+      return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    };
+
+    const loadElapsedTime = () => {
+      const storedData = localStorage.getItem('elapsedTimeData');
+      if (storedData) {
+        const { date, time } = JSON.parse(storedData);
+        if (date === getTodayString()) {
+          setElapsedTime(time);
+        } else {
+          setElapsedTime(0);
+        }
+      }
+    };
+
+    loadElapsedTime();
+
     const interval = setInterval(() => {
-      const now = Date.now();
-      const timeElapsed = now - startTime;
-      setElapsedTime(timeElapsed);
-      localStorage.setItem('elapsedTime', startTime.toString());
+      setElapsedTime(prevTime => {
+        const newTime = prevTime + 1000;
+        localStorage.setItem('elapsedTimeData', JSON.stringify({
+          date: getTodayString(),
+          time: newTime
+        }));
+        return newTime;
+      });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const now = new Date();
-    const timeUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
-    const timeout = setTimeout(() => {
-      localStorage.removeItem('elapsedTime');
-      setElapsedTime(0);
-    }, timeUntilMidnight);
-
-    return () => clearTimeout(timeout);
   }, []);
 
   const handleButtonClick = (bodyZone) => {
