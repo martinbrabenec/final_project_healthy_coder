@@ -62,7 +62,7 @@ function Activities() {
           const googleSearchUrl = `https://www.google.com/search?q=tell me more about ${activity.name}. how it can improve my health and how can i get started?`;
 
           return (
-            <div className={`col-md-3 col-sm-6 mb-4 ${isFiltered ? 'filtered' : ''}`} key={activity.id}>
+            <div className={`col-md-3 col-sm-6 mb-3 ${isFiltered ? 'filtered' : ''}`} key={activity.id}>
               <div className="card h-100">
                 <div className="image-container">
                   <img src={imageUrl} alt={activity.name} className="card-img-top activity-image" />
@@ -70,7 +70,7 @@ function Activities() {
                     <a href={googleSearchUrl} target="_blank" rel="noopener noreferrer" className="activity-name">{activity.name}</a>
                   </div>
                 </div>
-                <div className="card-body d-flex justify-content-between align-items-center">
+                <div className="card-body d-flex justify-content-between align-items-center p-2">
                   <h5 className="card-title mb-0">{activity.name}</h5>
                   <div className="like-button-container">
                     <HeartIcon 
@@ -82,7 +82,7 @@ function Activities() {
                     />
                   </div>
                 </div>
-                <div className="card-body">
+                <div className="card-body p-2">
                   <p className="card-text">{activity.description}</p>
                 </div>
               </div>

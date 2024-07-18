@@ -36,16 +36,19 @@ const Navigation = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className={`nav-link ${activeLink === '/users' ? 'active' : ''}`} to="/users" onClick={() => handleClick('/users')}>User Sphere</Link>
-            </li>
+          <ul className="navbar-nav me-auto">
             <li className="nav-item">
               <Link className={`nav-link ${activeLink === '/activities' ? 'active' : ''}`} to="/activities" onClick={() => handleClick('/activities')}>Exercise to Energize</Link>
             </li>
             <li className="nav-item">
               <Link className={`nav-link ${activeLink === '/recipes' ? 'active' : ''}`} to="/recipes" onClick={() => handleClick('/recipes')}>Nourish to Flourish</Link>
             </li>
+            <li className="nav-item">
+              <Link className={`nav-link ${activeLink === '/alternatives' ? 'active' : ''}`} to="/alternatives" onClick={() => handleClick('/alternatives')}>Health Mavericks</Link>
+            </li>
+          </ul>
+          <SearchBar />
+          <ul className="navbar-nav ms-auto">
             {user ? (
               <li className="nav-item">
                 <Logout />
@@ -60,11 +63,7 @@ const Navigation = () => {
                 </li>
               </>
             )}
-            <li className="nav-item">
-              <Link className={`nav-link ${activeLink === '/alternatives' ? 'active' : ''}`} to="/alternatives" onClick={() => handleClick('/alternatives')}>Health Mavericks</Link>
-            </li>
           </ul>
-          <SearchBar />
         </div>
       </div>
     </nav>

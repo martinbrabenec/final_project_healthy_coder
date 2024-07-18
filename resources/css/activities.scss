@@ -90,16 +90,17 @@
   .pagination {
     display: flex;
     list-style: none;
-    padding: 0px 15px 15px 15px
+    padding: 0;
   }
 
   .pagination button {
-    margin: 0 5px;
-    padding: 10px 15px;
+    margin: 0 3px;
+    padding: 8px 12px;
     border: none;
     background-color: #f0f0f0;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 0.875rem;
   }
 
   .pagination button.active {
@@ -118,13 +119,12 @@
 
   .card-body {
     position: relative;
-    padding: 5px 10px 5px 10px;
-    padding-bottom: 5px;
+    padding: 2px;
   }
 
   .card-title {
-    margin-bottom: 10px;
-    font-size: 1.1rem;
+    margin-bottom: 5px;
+    font-size: 1rem;
     cursor: pointer; /* Add cursor pointer for title */
   }
 }
