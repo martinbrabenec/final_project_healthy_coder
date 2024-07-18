@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import UserContext from '../context/UserContext';
 
 export default function Login(props) {
+    const { getUser } = useContext(UserContext);
     const [values, setValues] = useState({
         email: '',
         password: ''
@@ -19,7 +21,6 @@ export default function Login(props) {
 
             // If login is successful, redirect to home page
             if (response.status === 200) {
-                
                 navigate('/');
             }
         } catch (error) {
@@ -37,6 +38,8 @@ export default function Login(props) {
                 console.log('ERROR', error.message);
             }
         }
+
+        getUser();
     };
 
     const handleChange = (event) => {

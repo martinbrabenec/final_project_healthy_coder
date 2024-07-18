@@ -14,7 +14,9 @@ use App\Http\Controllers\AlternativeActivityController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\DataController;
 
-
+Route::middleware('auth')->get('/user', function (Request $request) {
+    return $request->user();
+});
 // Remove the duplicate import statement for RecipeController
 
 // User routes

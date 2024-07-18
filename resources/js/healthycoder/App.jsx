@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Home from './pages/Home';
@@ -10,9 +10,26 @@ import Register from './pages/Register';
 import Alternatives from './pages/Alternatives';
 import Footer from './components/Footer';
 import '../../css/app.scss';
+import UserContext  from './context/UserContext';
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  const getUser = async () => {
+    try {
+      const response = await axios.get('/api/user');
+      setUser(response.data);
+    } catch (error) {
+      setUser(false);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [])
+
   return (
+    <UserContext.Provider value={{ user, setUser, getUser }}>
     <Router>
       <div className="d-flex flex-column min-vh-100">
         <Navigation />
@@ -32,6 +49,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </UserContext.Provider>
   );
 }
 

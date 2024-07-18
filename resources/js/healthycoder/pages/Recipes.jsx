@@ -7,6 +7,8 @@ Modal.setAppElement('#root'); // Set the root element for accessibility
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recipesPerPage = 8; // Number of recipes per page
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -123,12 +125,30 @@ function Recipes() {
     }
   };
 
+  // Pagination logic
+  const indexOfLastRecipe = currentPage * recipesPerPage;
+  const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+
+  const handleNextPage = () => {
+    setCurrentPage(prevPage => prevPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage(prevPage => prevPage - 1);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const totalPages = Math.ceil(recipes.length / recipesPerPage);
+
   return (
     <div className="container">
-    
       <button className="new-recipe-button" onClick={() => { setNewRecipe(true); setSelectedRecipe({ name: '', photo: '', is_vegetarian: false, ingredients: [], steps: [] }); setModalIsOpen(true); }}>New Recipe</button>
       <div className="row">
-        {recipes.map(recipe => {
+        {currentRecipes.map(recipe => {
           const imageUrl = `/assets/food images/${recipe.photo}`;
           
           return (
@@ -163,6 +183,18 @@ function Recipes() {
             </div>
           );
         })}
+      </div>
+      
+      <div className="pagination-buttons">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <span
+            key={index + 1}
+            className={currentPage === index + 1 ? 'active' : ''}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </span>
+        ))}
       </div>
       
       <Modal
