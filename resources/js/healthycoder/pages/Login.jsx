@@ -21,6 +21,7 @@ export default function Login(props) {
 
             // If login is successful, redirect to home page
             if (response.status === 200) {
+                getUser();
                 navigate('/');
             }
         } catch (error) {
@@ -39,7 +40,7 @@ export default function Login(props) {
             }
         }
 
-        getUser();
+        
     };
 
     const handleChange = (event) => {

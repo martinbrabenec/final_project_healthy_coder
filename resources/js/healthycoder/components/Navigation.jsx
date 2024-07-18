@@ -1,19 +1,22 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../../../css/navigation.scss';
 import SearchBar from './Searchbar';
 import UserContext from '../context/UserContext';
+import Logout from '../components/Logout';
 
 const Navigation = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
-  const { user } = useContext(UserContext);
+  const { user, getUser } = useContext(UserContext);
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const handleClick = (path) => {
     setActiveLink(path);
   };
-
-  
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,10 +46,11 @@ const Navigation = () => {
             <li className="nav-item">
               <Link className={`nav-link ${activeLink === '/recipes' ? 'active' : ''}`} to="/recipes" onClick={() => handleClick('/recipes')}>Nourish to Flourish</Link>
             </li>
-            {
-              user ? 
-                'Logout'
-              :
+            {user ? (
+              <li className="nav-item">
+                <Logout />
+              </li>
+            ) : (
               <>
                 <li className="nav-item">
                   <Link className={`nav-link ${activeLink === '/login' ? 'active' : ''}`} to="/login" onClick={() => handleClick('/login')}>Login</Link>
@@ -55,7 +59,7 @@ const Navigation = () => {
                   <Link className={`nav-link ${activeLink === '/register' ? 'active' : ''}`} to="/register" onClick={() => handleClick('/register')}>Register</Link>
                 </li>
               </>
-            }
+            )}
             <li className="nav-item">
               <Link className={`nav-link ${activeLink === '/alternatives' ? 'active' : ''}`} to="/alternatives" onClick={() => handleClick('/alternatives')}>Health Mavericks</Link>
             </li>
